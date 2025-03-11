@@ -29,7 +29,8 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     [Header("Component Reference")]
     public Slider progressSlider;
-    public Animator characterAnimator;
+    // public Animator characterAnimator;
+    public VirtualObjectHandler currentObject;
     public Text countdownText; //! should change to TMPro
     public Text instructionText; //! should change to TMPro
     public Text ctaText; //! should change to TMPro
@@ -66,6 +67,8 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     private float m_timeSinceLastTap = 0f;
     private float m_idleThreshold = 3f;
+    private float m_holdCooldown = .1f; // Cooldown duration 
+    private float m_holdTime = 0f;  // Track time holding the tap
 
     void Update()
     {
@@ -73,6 +76,15 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
         if (m_isTapping)
         {
+            m_holdTime += Time.deltaTime;
+            Debug.Log($"hold time: {m_holdTime}");
+
+            if (m_holdTime >= m_holdCooldown)
+            {
+                m_isTapping = false;
+                return;
+            }
+
             m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, m_maxProgressValue, increaseSpeed * Time.deltaTime);
 
             CheckProgressMessages(ProgressMessage.Condition.OnIncrease);
@@ -99,14 +111,14 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
                 CheckProgressMessages(ProgressMessage.Condition.OnDecrease);
             }
 
-            Debug.Log(m_timeSinceLastTap);
+            // Debug.Log(m_timeSinceLastTap);
         }
 
         if (progressSlider)
         { progressSlider.value = m_currentProgressValue; }
 
-        if (characterAnimator)
-        { characterAnimator.SetFloat("animationProgress", m_currentProgressValue); }
+        if (currentObject)
+        { currentObject.UpdateCharacterAnimation(m_currentProgressValue); }
 
         if (Mathf.Abs(m_currentProgressValue - progressSlider.value) > 0.01f)
         {
@@ -179,19 +191,22 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         // m_isCanTapping = false; //! reset default, if needed
 
         m_currentProgressValue = 0;
-        characterAnimator.SetFloat("animationProgress", m_currentProgressValue);
+        currentObject.UpdateCharacterAnimation(m_currentProgressValue);
         progressSlider.value = m_currentProgressValue;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        m_timeSinceLastTap = 0f;
+        m_holdTime = 0f;
 
         m_isTapping = true;
+        m_timeSinceLastTap = 0f;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         m_isTapping = false;
+
+        m_holdTime = 0f;
     }
 }

@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class VirtualObjectHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public List<Animator> characters;
+
+    public void UpdateCharacterAnimation(float _arg)
     {
-        
+        characters[0].SetFloat("animationProgress", _arg);
+        characters[1].SetFloat("animationProgress", _arg);
+        characters[2].SetFloat("animationProgress", _arg);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+
+    }
+
+    private void OnDestroy()
+    {
+
     }
 }

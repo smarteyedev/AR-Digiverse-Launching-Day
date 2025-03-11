@@ -5,6 +5,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public TapMechanism tapMechanism;
+    public VirtualObjectHandler virtualObjectPrefab;
+    public Transform spawnLocation;
+
+    private void Start()
+    {
+        VirtualObjectHandler newObj = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation);
+        tapMechanism.currentObject = newObj;
+    }
 
     private void Update()
     {
