@@ -65,7 +65,7 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     }
 
     private float m_timeSinceLastTap = 0f;
-    private float m_idleThreshold = 2f;
+    private float m_idleThreshold = 3f;
 
     void Update()
     {
@@ -98,6 +98,8 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             {
                 CheckProgressMessages(ProgressMessage.Condition.OnDecrease);
             }
+
+            Debug.Log(m_timeSinceLastTap);
         }
 
         if (progressSlider)
@@ -183,6 +185,8 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        m_timeSinceLastTap = 0f;
+
         m_isTapping = true;
     }
 
