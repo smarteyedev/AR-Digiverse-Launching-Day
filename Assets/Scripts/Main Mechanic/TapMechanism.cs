@@ -37,8 +37,8 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [Header("Unity Event")]
     [Space(5)]
     public UnityEvent OnTapStart;
-    public UnityEvent<float> progressValue;
     public UnityEvent OnTapFinish;
+    public UnityEvent<float> progressValue;
 
     [Space(15f)]
     [Header("Progress Message")]
