@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public TapMechanism tapMechanism;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            tapMechanism.StartTapping();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            tapMechanism.ResetProgress();
+        }
     }
 }
