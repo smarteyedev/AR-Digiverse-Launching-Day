@@ -3,43 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VirtualObjectHandler : MonoBehaviour
+namespace Smarteye.AR
 {
-    [SerializeField] private List<Animator> characters;
-    [SerializeField] private ParticleSystem vfx;
-    [SerializeField] private GameObject messageParent;
-    [SerializeField] private Text messageText;
-
-    public void UpdateCharacterAnimation(float _arg)
+    public class VirtualObjectHandler : MonoBehaviour
     {
-        foreach (Animator item in characters)
+        [Header("Component Reference")]
+        [SerializeField] private List<Animator> characters;
+        [SerializeField] private ParticleSystem vfx;
+        [SerializeField] private GameObject messageParent;
+        [SerializeField] private Text messageText; //! ganti dengan textmeshpro
+
+        public void UpdateCharacterAnimation(float _arg)
         {
-            item.SetFloat("animationProgress", _arg);
-            item.SetFloat("animationProgress", _arg);
-            item.SetFloat("animationProgress", _arg);
+            foreach (Animator item in characters)
+            {
+                item.SetFloat("animationProgress", _arg);
+            }
         }
-    }
 
-    private void Start()
-    {
-        messageParent.gameObject.SetActive(false);
-        vfx.Stop();
-    }
+        private void Start()
+        {
+            messageParent.gameObject.SetActive(false);
+            vfx.Stop();
+        }
 
-    private void OnDestroy()
-    {
+        private void OnDestroy()
+        {
 
-    }
+        }
 
-    public void ShowVFX()
-    {
-        vfx.Play();
-    }
+        public void ShowVFX()
+        {
+            vfx.Play();
+        }
 
-
-    public void ShowMessage(string txt)
-    {
-        messageParent.gameObject.SetActive(true);
-        messageText.text = txt;
+        public void ShowMessage(string txt)
+        {
+            messageParent.gameObject.SetActive(true);
+            messageText.text = txt;
+        }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1296518834108248944}
   - component: {fileID: 7288352555483747224}
   m_Layer: 0
-  m_Name: Game-Manager
+  m_Name: == Game-Manager ==
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,15 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeDuration: 60
-  isTimerRun: 0
-  tapMechanism: {fileID: 0}
-  countdownText: {fileID: 0}
   virtualObjectPrefab: {fileID: 8108707588958971262, guid: d35b8cb91d98338428830bdcf246e8a0,
     type: 3}
   spawnLocation: {fileID: 0}
+  tapMechanism: {fileID: 0}
+  timerParent: {fileID: 0}
+  countdownText: {fileID: 0}
   OnTimerStart:
     m_PersistentCalls:
       m_Calls: []
   OnTimerFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFirstTapping:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTappingFinished:
     m_PersistentCalls:
       m_Calls: []

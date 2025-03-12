@@ -4,45 +4,118 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+namespace Smarteye.AR
 {
-    [Header("Timer Config")]
-    [SerializeField] private float timeDuration = 60f;
-    private float m_currentTime = 60f;
-    [SerializeField] private bool isTimerRun = false;
+    /// <summary>
+    /// Berikut kegunaan dari class Game Manager :
+    ///  -> mengatur game timer 
+    ///  -> fungsi-fungsi untuk mengatur mekanisme game tapping
+    ///  
+    /// terdapat Unity Event digunakan untuk mengatur game flow
+    /// </summary>
+    /// 
 
-    [Header("Component Reference")]
-    [SerializeField] private TapMechanism tapMechanism;
-    [SerializeField] private Text countdownText;
-
-    [Header("Object Reference")]
-    public VirtualObjectHandler virtualObjectPrefab;
-    [SerializeField] private Transform spawnLocation;
-    private VirtualObjectHandler m_currentObject;
-
-    [Header("Unity Event")]
-    public UnityEvent OnTimerStart;
-    public UnityEvent OnTimerFinish;
-
-
-    private void Start()
+    public class GameManager : MonoBehaviour
     {
-        countdownText.gameObject.SetActive(false);
-    }
+        [Header("Timer Config")]
+        [SerializeField] private float timeDuration = 60f;
+        private float m_currentTime = 60f;
+        private bool isTimerRun = false;
 
-    private void Update()
-    {
+        [Header("Object Prefab")]
+        public VirtualObjectHandler virtualObjectPrefab;
+        [SerializeField] private Transform spawnLocation;
+        private VirtualObjectHandler m_currentObject;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        [Header("Component Reference")]
+        [SerializeField] private TapMechanism tapMechanism;
+
+        [Space(5f)]
+        [SerializeField] private GameObject timerParent;
+        [SerializeField] private Text countdownText; //! ganti dengan komponen textmeshpro
+
+        [Header("Unity Event")]
+        [Tooltip("is called when timer is start")]
+        public UnityEvent OnTimerStart;
+        [Tooltip("is called when timer is finish")]
+        public UnityEvent OnTimerFinish;
+
+        [Space(10f)]
+        [Tooltip("is called when countdown in tappingMechanism is Finish")]
+        public UnityEvent OnFirstTapping;
+        [Tooltip("is called when player finish the tapping game and progress value is equal to max")]
+        public UnityEvent OnTappingFinished;
+
+        private void Start()
         {
-            if (!m_currentObject)
+            if (timerParent) { timerParent.gameObject.SetActive(false); }
+        }
+
+        private void Update()
+        {
+            //! DebuggingFunction();
+
+            if (m_currentTime > 0 && isTimerRun)
             {
-                m_currentObject = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<VirtualObjectHandler>();
-                tapMechanism.SetupVirtualObject(m_currentObject);
+                m_currentTime -= Time.deltaTime;
+
+                int hours = Mathf.FloorToInt(m_currentTime / 3600);
+                int minutes = Mathf.FloorToInt((m_currentTime % 3600) / 60);
+                int seconds = Mathf.FloorToInt(m_currentTime % 60);
+
+                if (countdownText != null)
+                {
+                    if (hours > 0)
+                        countdownText.text = string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
+                    else if (minutes > 0)
+                        countdownText.text = string.Format("{0:D2}:{1:D2}", minutes, seconds);
+                    else
+                        countdownText.text = string.Format("{0:D2}", seconds);
+                }
+                else
+                {
+                    Debug.Log($"text component is empty, duration is : {m_currentTime}");
+                }
+            }
+            else
+            {
+                // Timer selesai
+                countdownText.text = "00";
+                isTimerRun = false;
+                OnTimerFinish?.Invoke();
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        #region Main Function
+        /// <summary>
+        /// fungsi-fungsi ini digunakan untuk mengatur mekanisme game tapping
+        /// </summary>
+
+        // gunakan fungsi ini untuk memasukkan virutal object sebagai object reverensi dari tap mechanism
+        // ketika marker terdeteksi dan object muncul di layar
+        public void AssignObjectToTapMechanism()
+        {
+            tapMechanism.SetupVirtualObject(m_currentObject);
+
+            tapMechanism.OnTapStart.AddListener(() => OnFirstTapping.Invoke());
+            tapMechanism.OnTapFinish.AddListener(() => OnTappingFinished.Invoke());
+        }
+
+        // gunakan fungsi ini ketika pertama kali memulai permainan, setelah object virtual muncul di layar
+        public void StartTappingGame()
+        {
+            if (m_currentObject)
+            {
+                tapMechanism.StartTapping(() =>
+                {
+                    StartTimer();
+                    timerParent.gameObject.SetActive(true);
+                });
+            }
+        }
+
+        // panggil fungsi ini ketika marker atau object tidak terdeteksi
+        public void OnMarkerDisappear()
         {
             if (m_currentObject)
             {
@@ -53,72 +126,56 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        #endregion
+
+        #region Timer Behaviour
+        private void StartTimer()
         {
-            if (m_currentObject)
-            {
-                tapMechanism.StartTapping(() =>
-                {
-                    StartTimer();
-                    countdownText.gameObject.SetActive(true);
-                });
-            }
+            if (isTimerRun) return;
+
+            OnTimerStart?.Invoke();
+            isTimerRun = true;
+
+            m_currentTime = timeDuration;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        private void PauseTimer()
         {
-            tapMechanism.ResetTappingProgress();
-            ResetTimer();
-        }
-
-        if (m_currentTime > 0 && isTimerRun)
-        {
-            m_currentTime -= Time.deltaTime;
-
-            int hours = Mathf.FloorToInt(m_currentTime / 3600);
-            int minutes = Mathf.FloorToInt((m_currentTime % 3600) / 60);
-            int seconds = Mathf.FloorToInt(m_currentTime % 60);
-
-            if (countdownText != null)
-            {
-                if (hours > 0)
-                    countdownText.text = string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
-                else if (minutes > 0)
-                    countdownText.text = string.Format("{0:D2}:{1:D2}", minutes, seconds);
-                else
-                    countdownText.text = string.Format("{0:D2}", seconds);
-            }
-            else
-            {
-                Debug.Log($"text component is empty, duration is : {m_currentTime}");
-            }
-        }
-        else
-        {
-            // Timer selesai
-            countdownText.text = "00";
             isTimerRun = false;
-            OnTimerFinish?.Invoke();
         }
-    }
 
-    public void StartTimer()
-    {
-        if (isTimerRun) return;
+        private void ResetTimer()
+        {
+            m_currentTime = timeDuration;
+        }
+        #endregion
 
-        OnTimerStart?.Invoke();
-        isTimerRun = true;
+        private void DebuggingFunction()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                if (!m_currentObject)
+                {
+                    m_currentObject = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<VirtualObjectHandler>();
+                    AssignObjectToTapMechanism();
+                }
+            }
 
-        m_currentTime = timeDuration;
-    }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                OnMarkerDisappear();
+            }
 
-    public void PauseTimer()
-    {
-        isTimerRun = false;
-    }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartTappingGame();
+            }
 
-    public void ResetTimer()
-    {
-        m_currentTime = timeDuration;
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                tapMechanism.ResetTappingProgress();
+                ResetTimer();
+            }
+        }
     }
 }
