@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("Object Reference")]
     public VirtualObjectHandler virtualObjectPrefab;
     [SerializeField] private Transform spawnLocation;
+    private VirtualObjectHandler m_currentObject;
 
     [Header("Unity Event")]
     public UnityEvent OnTimerStart;
@@ -26,15 +27,42 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        VirtualObjectHandler newObj = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation);
-        tapMechanism.SetupVirtualObject(newObj);
+        countdownText.gameObject.SetActive(false);
     }
 
     private void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (!m_currentObject)
+            {
+                m_currentObject = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<VirtualObjectHandler>();
+                tapMechanism.SetupVirtualObject(m_currentObject);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (m_currentObject)
+            {
+                Destroy(m_currentObject.gameObject);
+
+                tapMechanism.SetTappingUIActive(false);
+                tapMechanism.ResetTappingProgress();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            tapMechanism.StartTapping(() => StartTimer());
+            if (m_currentObject)
+            {
+                tapMechanism.StartTapping(() =>
+                {
+                    StartTimer();
+                    countdownText.gameObject.SetActive(true);
+                });
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -76,6 +104,8 @@ public class GameManager : MonoBehaviour
 
     public void StartTimer()
     {
+        if (isTimerRun) return;
+
         OnTimerStart?.Invoke();
         isTimerRun = true;
 

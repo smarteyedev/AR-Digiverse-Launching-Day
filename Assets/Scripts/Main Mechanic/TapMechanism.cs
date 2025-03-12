@@ -28,13 +28,18 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [SerializeField] private float decreaseSpeed = 0.1f;
     private float m_maxProgressValue = 1f;
 
+    [Space(5f)]
+    [SerializeField] bool isUsingOverlayCanvasMessage = false;
+
     [Header("Component Reference")]
     [SerializeField] private Slider progressSlider;
+    private float m_lowerSliderValue = 0.1f;
     // [SerializeField] private Animator characterAnimator;
-    [SerializeField] private VirtualObjectHandler currentObject;
     [SerializeField] private Text countdownText; //! should change to TMPro
     [SerializeField] private Text instructionText; //! should change to TMPro
-    [SerializeField] private Text ctaText; //! should change to TMPro
+    private Text ctaText; //! should change to TMPro
+    [SerializeField] private GameObject ctaPlank;
+    private VirtualObjectHandler currentObject;
 
     [Header("Unity Event")]
     [Space(5)]
@@ -67,8 +72,12 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     void Start()
     {
-        if (progressSlider)
-        { progressSlider.value = m_currentProgressValue; }
+        if (progressSlider) { progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue; }
+
+        if (isUsingOverlayCanvasMessage)
+        {
+            ctaText = ctaPlank.GetComponentInChildren<Text>();
+        }
     }
 
     public void SetupVirtualObject(VirtualObjectHandler vObj)
@@ -97,13 +106,14 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
             CheckProgressMessages(ProgressMessage.Condition.OnIncrease);
 
-            if (progressSlider.value >= m_maxProgressValue)
+            if (progressSlider.value == m_maxProgressValue)
             {
                 OnTapFinish?.Invoke();
                 m_isCanTapping = false;
 
                 SetTappingUIActive(false);
 
+                m_isCanTapping = false;
                 Debug.Log($"player reached max value");
             }
         }
@@ -122,8 +132,7 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             // Debug.Log(m_timeSinceLastTap);
         }
 
-        if (progressSlider)
-        { progressSlider.value = m_currentProgressValue; }
+        if (progressSlider) { progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue; }
 
         if (currentObject)
         { currentObject.UpdateCharacterAnimation(m_currentProgressValue); }
@@ -141,7 +150,10 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             if (progressMessage.condition == condition && Mathf.Abs(m_currentProgressValue - progressMessage.targetProgressValue) <= 0.01f)
             {
                 // Debug.Log(progressMessage.message);
-                ctaText.text = $"{progressMessage.message}";
+                if (isUsingOverlayCanvasMessage && ctaText)
+                {
+                    ctaText.text = $"{progressMessage.message}";
+                }
                 currentObject.ShowMessage(progressMessage.message);
                 progressMessage.onProgressReached?.Invoke();
             }
@@ -173,7 +185,6 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             yield return new WaitForSeconds(1f);
         }
 
-        m_isCanTapping = true;
         OnTapStart?.Invoke();
 
         if (countdownText)
@@ -188,13 +199,20 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         if (instructionText)
         {
-            instructionText.gameObject.SetActive(isActive);  // Hanya aktifkan messageText saat dibutuhkan
+            instructionText.gameObject.SetActive(isActive);
         }
 
         if (progressSlider)
         {
-            progressSlider.gameObject.SetActive(isActive);  // Hanya aktifkan progressSlider saat dibutuhkan
+            progressSlider.gameObject.SetActive(isActive);
         }
+
+        if (ctaText && isUsingOverlayCanvasMessage)
+        {
+            ctaPlank.gameObject.SetActive(isActive);
+        }
+
+        m_isCanTapping = isActive;
     }
 
     public void ResetTappingProgress()

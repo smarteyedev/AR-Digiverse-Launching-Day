@@ -7,18 +7,23 @@ public class VirtualObjectHandler : MonoBehaviour
 {
     [SerializeField] private List<Animator> characters;
     [SerializeField] private ParticleSystem vfx;
-    [SerializeField] Text messageText;
+    [SerializeField] private GameObject messageParent;
+    [SerializeField] private Text messageText;
 
     public void UpdateCharacterAnimation(float _arg)
     {
-        characters[0].SetFloat("animationProgress", _arg);
-        characters[1].SetFloat("animationProgress", _arg);
-        characters[2].SetFloat("animationProgress", _arg);
+        foreach (Animator item in characters)
+        {
+            item.SetFloat("animationProgress", _arg);
+            item.SetFloat("animationProgress", _arg);
+            item.SetFloat("animationProgress", _arg);
+        }
     }
 
     private void Start()
     {
-
+        messageParent.gameObject.SetActive(false);
+        vfx.Stop();
     }
 
     private void OnDestroy()
@@ -34,6 +39,7 @@ public class VirtualObjectHandler : MonoBehaviour
 
     public void ShowMessage(string txt)
     {
+        messageParent.gameObject.SetActive(true);
         messageText.text = txt;
     }
 }
