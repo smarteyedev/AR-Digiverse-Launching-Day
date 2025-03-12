@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VirtualObjectHandler : MonoBehaviour
 {
-    public List<Animator> characters;
+    [SerializeField] private List<Animator> characters;
+    [SerializeField] private ParticleSystem vfx;
+    [SerializeField] Text messageText;
 
     public void UpdateCharacterAnimation(float _arg)
     {
@@ -21,5 +24,16 @@ public class VirtualObjectHandler : MonoBehaviour
     private void OnDestroy()
     {
 
+    }
+
+    public void ShowVFX()
+    {
+        vfx.Play();
+    }
+
+
+    public void ShowMessage(string txt)
+    {
+        messageText.text = txt;
     }
 }

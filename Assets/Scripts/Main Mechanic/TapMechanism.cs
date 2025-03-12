@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Berikut kegunaan dari class Tap Mechanism :
@@ -22,18 +23,18 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     [Header("Configuration")]
     [Range(0f, 1f)]
-    public float increaseSpeed = 0.3f;
+    [SerializeField] private float increaseSpeed = 0.3f;
     [Range(0f, 1f)]
-    public float decreaseSpeed = 0.1f;
+    [SerializeField] private float decreaseSpeed = 0.1f;
     private float m_maxProgressValue = 1f;
 
     [Header("Component Reference")]
-    public Slider progressSlider;
-    // public Animator characterAnimator;
-    public VirtualObjectHandler currentObject;
-    public Text countdownText; //! should change to TMPro
-    public Text instructionText; //! should change to TMPro
-    public Text ctaText; //! should change to TMPro
+    [SerializeField] private Slider progressSlider;
+    // [SerializeField] private Animator characterAnimator;
+    [SerializeField] private VirtualObjectHandler currentObject;
+    [SerializeField] private Text countdownText; //! should change to TMPro
+    [SerializeField] private Text instructionText; //! should change to TMPro
+    [SerializeField] private Text ctaText; //! should change to TMPro
 
     [Header("Unity Event")]
     [Space(5)]
@@ -43,7 +44,7 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     [Space(15f)]
     [Header("Progress Message")]
-    public List<ProgressMessage> progressMessages;
+    [SerializeField] private List<ProgressMessage> progressMessages;
 
     [System.Serializable]
     public class ProgressMessage
@@ -59,16 +60,23 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         public UnityEvent onProgressReached;
     }
 
+    private float m_timeSinceLastTap = 0f;
+    private float m_idleThreshold = 3f;
+    private float m_holdCooldown = .1f; // Cooldown duration 
+    private float m_holdTime = 0f;  // Track time holding the tap
+
     void Start()
     {
         if (progressSlider)
         { progressSlider.value = m_currentProgressValue; }
     }
 
-    private float m_timeSinceLastTap = 0f;
-    private float m_idleThreshold = 3f;
-    private float m_holdCooldown = .1f; // Cooldown duration 
-    private float m_holdTime = 0f;  // Track time holding the tap
+    public void SetupVirtualObject(VirtualObjectHandler vObj)
+    {
+        currentObject = vObj;
+
+        OnTapFinish.AddListener(vObj.ShowVFX);
+    }
 
     void Update()
     {
@@ -77,7 +85,7 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (m_isTapping)
         {
             m_holdTime += Time.deltaTime;
-            Debug.Log($"hold time: {m_holdTime}");
+            // Debug.Log($"hold time: {m_holdTime}");
 
             if (m_holdTime >= m_holdCooldown)
             {
@@ -94,7 +102,7 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
                 OnTapFinish?.Invoke();
                 m_isCanTapping = false;
 
-                SetUIActive(false);
+                SetTappingUIActive(false);
 
                 Debug.Log($"player reached max value");
             }
@@ -134,21 +142,22 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             {
                 // Debug.Log(progressMessage.message);
                 ctaText.text = $"{progressMessage.message}";
+                currentObject.ShowMessage(progressMessage.message);
                 progressMessage.onProgressReached?.Invoke();
             }
         }
     }
 
     // Fungsi untuk memulai tapping dengan countdown
-    public void StartTapping()
+    public void StartTapping(Action onFinishCountdownAction)
     {
         if (m_isCanTapping) return;
 
-        StartCoroutine(CountdownAndStartTapping());
+        StartCoroutine(CountdownAndStartTapping(onFinishCountdownAction));
     }
 
     // Coroutine untuk menampilkan countdown 3, 2, 1 sebelum memulai tapping
-    private IEnumerator CountdownAndStartTapping()
+    private IEnumerator CountdownAndStartTapping(Action finishAction)
     {
         if (countdownText)
             countdownText.gameObject.SetActive(true);
@@ -170,10 +179,12 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (countdownText)
             countdownText.gameObject.SetActive(false);
 
-        SetUIActive(true);
+        SetTappingUIActive(true);
+
+        finishAction.Invoke();
     }
 
-    private void SetUIActive(bool isActive)
+    public void SetTappingUIActive(bool isActive)
     {
         if (instructionText)
         {
@@ -186,7 +197,7 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         }
     }
 
-    public void ResetProgress()
+    public void ResetTappingProgress()
     {
         // m_isCanTapping = false; //! reset default, if needed
 
