@@ -152,6 +152,11 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
                 // Debug.Log(progressMessage.message);
                 if (isUsingOverlayCanvasMessage && ctaText)
                 {
+                    if (!ctaPlank.activeSelf)
+                    {
+                        ctaPlank.gameObject.SetActive(true);
+                    }
+
                     ctaText.text = $"{progressMessage.message}";
                 }
                 currentObject.ShowMessage(progressMessage.message);
@@ -207,9 +212,9 @@ public class TapMechanism : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             progressSlider.gameObject.SetActive(isActive);
         }
 
-        if (ctaText && isUsingOverlayCanvasMessage)
+        if (ctaPlank.activeSelf && isUsingOverlayCanvasMessage)
         {
-            ctaPlank.gameObject.SetActive(isActive);
+            ctaPlank.gameObject.SetActive(false);
         }
 
         m_isCanTapping = isActive;
