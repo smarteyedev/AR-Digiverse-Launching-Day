@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Candra/MainAR.unity
+    guid: 9bed66f18ec3fa24caf9f545c095e06f
+  m_configObjects:
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: b3e021afb52d80842a596faf49125a72,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a491c1a7f64d09843b05eedbf2fe0c20,
+      type: 2}
