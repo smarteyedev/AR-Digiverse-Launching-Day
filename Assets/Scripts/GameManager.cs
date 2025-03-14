@@ -22,6 +22,8 @@ namespace Smarteye.AR
         private bool isTimerRun = false;
         private bool m_isTimerFinished = false;
 
+        public bool isGamePlaying = false;
+
         [Header("Object Prefab")]
         // public VirtualObjectHandler virtualObjectPrefab;
         // [SerializeField] private Transform spawnLocation;
@@ -33,6 +35,7 @@ namespace Smarteye.AR
         [Space(5f)]
         [SerializeField] private GameObject timerParent;
         [SerializeField] private TextMeshProUGUI countdownText;
+        [SerializeField] private UIController uIController;
 
         public UnityEvent OnStartGame;
 
@@ -53,6 +56,8 @@ namespace Smarteye.AR
             if (timerParent) { timerParent.gameObject.SetActive(false); }
 
             OnStartGame?.Invoke();
+
+            Screen.fullScreen = !Screen.fullScreen;
         }
 
         private void Update()
@@ -84,6 +89,7 @@ namespace Smarteye.AR
                 if (hours == 0 && minutes == 0 && seconds == 0 && !m_isTimerFinished)
                 {
                     OnTimerFinish?.Invoke();
+                    PlayingStatus(false);
                     m_isTimerFinished = true;
                     Debug.Log($"timer: {hours} {minutes} {minutes}");
                 }
@@ -101,30 +107,47 @@ namespace Smarteye.AR
         /// fungsi-fungsi ini digunakan untuk mengatur mekanisme game tapping
         /// </summary>
 
-        // gunakan fungsi ini untuk memasukkan virutal object sebagai object reverensi dari tap mechanism
-        // ketika marker terdeteksi dan object muncul di layar
-        // public void AssignObjectToTapMechanism()
-        // {
-        //     tapMechanism.SetupVirtualObject(m_currentObject);
-
-        //     tapMechanism.OnTapStart.AddListener(() => OnFirstTapping.Invoke());
-        //     tapMechanism.OnTapFinish.AddListener(() => OnTappingFinished.Invoke());
-        // }
-
         // gunakan fungsi ini ketika pertama kali memulai permainan, setelah object virtual muncul di layar
         public void StartTappingGame()
         {
-            tapMechanism.StartTapping(() =>
+            if (!isGamePlaying)
             {
-                StartTimer();
-                timerParent.gameObject.SetActive(true);
-            });
+                tapMechanism.StartTapping(() =>
+                {
+                    StartTimer();
+                    timerParent.gameObject.SetActive(true);
+                    PlayingStatus(true);
+                });
+            }
+        }
+
+        public void PlayingStatus(bool state)
+        {
+            isGamePlaying = state;
+        }
+
+        public void OnMarkerFound()
+        {
+            if (!isGamePlaying)
+            {
+                uIController.ControllerShowPanel(3);
+            }
+            else
+            {
+                uIController.ControllerShowPanel(4);
+                tapMechanism.SetTappingUIActive(true);
+            }
         }
 
         public void OnMarkerLost()
         {
             tapMechanism.SetTappingUIActive(false);
             tapMechanism.ResetTappingProgress();
+
+            if (!isGamePlaying)
+            {
+                uIController.HideStartPanel();
+            }
         }
 
         #endregion
@@ -153,11 +176,6 @@ namespace Smarteye.AR
 
         private void DebuggingFunction()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-
-            }
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartTappingGame();

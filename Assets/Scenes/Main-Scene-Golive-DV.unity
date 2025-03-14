@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.54934484, g: 0.79545444, b: 0.97348726, a: 1}
+  m_IndirectSpecularColor: {r: 0.54976773, g: 0.7956297, b: 0.9693768, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1004,6 +1004,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: uIController
+      value: 
+      objectReference: {fileID: 7958754771465892314}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: countdownText
       value: 
       objectReference: {fileID: 9041947223529878559}
@@ -1020,7 +1025,7 @@ PrefabInstance:
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
@@ -1059,6 +1064,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6264301703492039568}
@@ -1072,6 +1082,11 @@ PrefabInstance:
       propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 6521219258184994524}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 7958754771465892314}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnMarkerDetected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1114,6 +1129,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: OnMarkerDisappear.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1857874629}
@@ -1131,6 +1151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: StopTracker
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: ControllerShowPanel
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
@@ -1174,6 +1199,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: Smarteye.AR.UIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_IntArgument
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: OnMarkerDetected.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
@@ -1205,6 +1240,11 @@ PrefabInstance:
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnTimerFinish.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
@@ -3621,18 +3661,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1379230088}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1369874259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3975,7 +4003,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Waktu menyelesaikan : 0 detik'
+  m_text: Poin kamu naik +1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3dfad47a29c03474cbfc59ea23cc95e2, type: 2}
   m_sharedMaterial: {fileID: -6571179471772263492, guid: 3dfad47a29c03474cbfc59ea23cc95e2,
@@ -4470,10 +4498,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3573847654782496031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 327.15067, y: -878.8305}
-  m_SizeDelta: {x: -733.97784, y: -1843.5361}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -212.84933, y: 81.169495}
+  m_SizeDelta: {x: 346.02216, y: 76.46387}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1767163928
 MonoBehaviour:
@@ -4783,7 +4811,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Waktu menyelesaikan : 0 detik'
+  m_text: Poin bertambah +1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3dfad47a29c03474cbfc59ea23cc95e2, type: 2}
   m_sharedMaterial: {fileID: -6571179471772263492, guid: 3dfad47a29c03474cbfc59ea23cc95e2,
@@ -7728,6 +7756,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6264301703492039568}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   progressValue:
     m_PersistentCalls:
       m_Calls: []
@@ -7877,10 +7917,10 @@ MonoBehaviour:
   OnMarkerDetected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7958754771465892314}
-        m_TargetAssemblyTypeName: Smarteye.AR.UIController, Assembly-CSharp
-        m_MethodName: ControllerShowPanel
-        m_Mode: 3
+      - m_Target: {fileID: 269359552}
+        m_TargetAssemblyTypeName: Smarteye.AR.GameManager, Assembly-CSharp
+        m_MethodName: OnMarkerFound
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8371,6 +8411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9139f7eee67d44492dbec3a88b202f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 269359552}
   panels:
   - panelHandler: {fileID: 1025477284}
     onPanelOpen:

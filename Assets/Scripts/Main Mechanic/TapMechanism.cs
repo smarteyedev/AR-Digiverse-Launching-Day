@@ -73,6 +73,8 @@ namespace Smarteye.AR
             public UnityEvent onProgressReached;
         }
 
+        private Coroutine m_coundownCoroutine = null;
+
         private float m_timeSinceLastTap = 0f;
         private float m_idleThreshold = 1.5f;
         private float m_holdCooldown = .1f; // Cooldown duration 
@@ -183,7 +185,7 @@ namespace Smarteye.AR
         {
             if (m_isCanTapping) return;
 
-            StartCoroutine(CountdownAndStartTapping(onFinishCountdownAction));
+            m_coundownCoroutine = StartCoroutine(CountdownAndStartTapping(onFinishCountdownAction));
         }
 
         // Coroutine untuk menampilkan countdown 3, 2, 1 sebelum memulai tapping
@@ -215,6 +217,15 @@ namespace Smarteye.AR
             finishAction.Invoke();
         }
 
+        public void ResetCountdown()
+        {
+            if (m_coundownCoroutine != null)
+            {
+                StopCoroutine(m_coundownCoroutine);
+                m_coundownCoroutine = null;
+            }
+        }
+
         public void SetTappingUIActive(bool isActive)
         {
             if (instructionText)
@@ -241,7 +252,12 @@ namespace Smarteye.AR
 
             m_currentProgressValue = 0;
             currentObject.UpdateCharacterAnimation(m_currentProgressValue);
-            progressSlider.value = m_currentProgressValue;
+            progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
+        }
+
+        public void ContinueTapping()
+        {
+            SetTappingUIActive(true);
         }
 
         public void OnPointerDown(PointerEventData eventData)

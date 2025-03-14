@@ -3,15 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Video;
 
 namespace Smarteye.AR
 {
     public class UIController : MonoBehaviour
     {
+        [SerializeField] private GameManager gameManager;
         [SerializeField] private List<PanelItem> panels;
 
         public void ControllerShowPanel(int panelIndex)
         {
+            for (int i = 0; i < panels.Count; i++)
+            {
+                if (panels[i].panelHandler.gameObject.activeSelf)
+                {
+                    panels[i].onPanelClose?.Invoke();
+                }
+            }
+
             foreach (var panel in panels)
             {
                 panel.panelHandler.PanelVisibility(false);
@@ -20,7 +30,13 @@ namespace Smarteye.AR
             if (panelIndex >= 0 && panelIndex < panels.Count)
             {
                 panels[panelIndex].panelHandler.PanelVisibility(true);
+                panels[panelIndex].onPanelOpen?.Invoke();
             }
+        }
+
+        public void HideStartPanel()
+        {
+            panels[3].panelHandler.PanelVisibility(false);
         }
 
         [Serializable]
