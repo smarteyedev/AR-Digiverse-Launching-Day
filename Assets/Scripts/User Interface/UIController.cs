@@ -10,7 +10,7 @@ namespace Smarteye.AR
     {
         [SerializeField] private List<PanelItem> panels;
 
-        public void ShowPanel(int panelIndex)
+        public void ControllerShowPanel(int panelIndex)
         {
             foreach (var panel in panels)
             {
@@ -33,6 +33,11 @@ namespace Smarteye.AR
             public UnityEvent onPanelOpen;
             [Space(2f)]
             public UnityEvent onPanelClose;
+        }
+
+        private void Start()
+        {
+            ControllerShowPanel(0);
         }
     }
 }

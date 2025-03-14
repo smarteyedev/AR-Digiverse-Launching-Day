@@ -10,7 +10,7 @@ namespace Smarteye.AR.WebRequest
     {
         private void Start()
         {
-                SendPlayerData();
+
         }
 
         void Update()

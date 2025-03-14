@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Smarteye.AR
 {
@@ -24,7 +25,7 @@ namespace Smarteye.AR
         [Header("Object Prefab")]
         // public VirtualObjectHandler virtualObjectPrefab;
         // [SerializeField] private Transform spawnLocation;
-        [SerializeField] private VirtualObjectHandler m_currentObject;
+        // [SerializeField] private VirtualObjectHandler m_currentObject;
 
         [Header("Component Reference")]
         [SerializeField] private TapMechanism tapMechanism;
@@ -32,6 +33,8 @@ namespace Smarteye.AR
         [Space(5f)]
         [SerializeField] private GameObject timerParent;
         [SerializeField] private TextMeshProUGUI countdownText;
+
+        public UnityEvent OnStartGame;
 
         [Space(10f)]
         [Tooltip("is called when timer is start")]
@@ -49,7 +52,7 @@ namespace Smarteye.AR
         {
             if (timerParent) { timerParent.gameObject.SetActive(false); }
 
-            AssignObjectToTapMechanism();
+            OnStartGame?.Invoke();
         }
 
         private void Update()
@@ -100,36 +103,28 @@ namespace Smarteye.AR
 
         // gunakan fungsi ini untuk memasukkan virutal object sebagai object reverensi dari tap mechanism
         // ketika marker terdeteksi dan object muncul di layar
-        public void AssignObjectToTapMechanism()
-        {
-            tapMechanism.SetupVirtualObject(m_currentObject);
+        // public void AssignObjectToTapMechanism()
+        // {
+        //     tapMechanism.SetupVirtualObject(m_currentObject);
 
-            tapMechanism.OnTapStart.AddListener(() => OnFirstTapping.Invoke());
-            tapMechanism.OnTapFinish.AddListener(() => OnTappingFinished.Invoke());
-        }
+        //     tapMechanism.OnTapStart.AddListener(() => OnFirstTapping.Invoke());
+        //     tapMechanism.OnTapFinish.AddListener(() => OnTappingFinished.Invoke());
+        // }
 
         // gunakan fungsi ini ketika pertama kali memulai permainan, setelah object virtual muncul di layar
         public void StartTappingGame()
         {
-            if (m_currentObject)
+            tapMechanism.StartTapping(() =>
             {
-                tapMechanism.StartTapping(() =>
-                {
-                    StartTimer();
-                    timerParent.gameObject.SetActive(true);
-                });
-            }
+                StartTimer();
+                timerParent.gameObject.SetActive(true);
+            });
         }
 
         public void OnMarkerLost()
         {
-            if (m_currentObject)
-            {
-                Destroy(m_currentObject.gameObject);
-
-                tapMechanism.SetTappingUIActive(false);
-                tapMechanism.ResetTappingProgress();
-            }
+            tapMechanism.SetTappingUIActive(false);
+            tapMechanism.ResetTappingProgress();
         }
 
         #endregion
@@ -160,11 +155,7 @@ namespace Smarteye.AR
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                if (!m_currentObject)
-                {
-                    // m_currentObject = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<VirtualObjectHandler>();
-                    AssignObjectToTapMechanism();
-                }
+
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -177,6 +168,11 @@ namespace Smarteye.AR
                 tapMechanism.ResetTappingProgress();
                 ResetTimer();
             }
+        }
+
+        public void ResetScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

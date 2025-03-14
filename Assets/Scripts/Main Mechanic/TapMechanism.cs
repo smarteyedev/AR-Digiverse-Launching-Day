@@ -41,13 +41,18 @@ namespace Smarteye.AR
         [SerializeField] private TextMeshProUGUI countdownText;
         [SerializeField] private TextMeshProUGUI instructionText;
         [SerializeField] private GameObject ctaPlank;
-        private TextMeshProUGUI ctaText; //! should change to TMPro
-        private VirtualObjectHandler currentObject;
+        private TextMeshProUGUI ctaText;
+        [SerializeField] private VirtualObjectHandler currentObject;
 
         [Header("Unity Event")]
         [Space(5)]
         public UnityEvent OnTapStart;
+
+        [Space(3f)]
+        private bool isFinished = true;
         public UnityEvent OnTapFinish;
+
+        [Space(3f)]
         public UnityEvent<float> progressValue;
 
         [Space(15f)]
@@ -85,9 +90,9 @@ namespace Smarteye.AR
 
         public void SetupVirtualObject(VirtualObjectHandler vObj)
         {
-            currentObject = vObj;
+            // currentObject = vObj;
 
-            OnTapFinish.AddListener(vObj.ShowVFX);
+            // OnTapFinish.AddListener(vObj.ShowVFX);
         }
 
         void Update()
@@ -111,7 +116,12 @@ namespace Smarteye.AR
 
                 if (progressSlider.value == m_maxProgressValue)
                 {
-                    OnTapFinish?.Invoke();
+                    if (!isFinished)
+                    {
+                        OnTapFinish?.Invoke();
+                        isFinished = true;
+                    }
+
                     m_isCanTapping = false;
 
                     SetTappingUIActive(false);
@@ -199,6 +209,8 @@ namespace Smarteye.AR
                 panelCountdown.SetActive(false);
 
             SetTappingUIActive(true);
+
+            isFinished = false;
 
             finishAction.Invoke();
         }
