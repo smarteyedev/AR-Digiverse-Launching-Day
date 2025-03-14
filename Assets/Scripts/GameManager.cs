@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Smarteye.AR
 {
@@ -21,20 +19,21 @@ namespace Smarteye.AR
         [SerializeField] private float timeDuration = 60f;
         private float m_currentTime = 60f;
         private bool isTimerRun = false;
+        private bool m_isTimerFinished = false;
 
         [Header("Object Prefab")]
-        public VirtualObjectHandler virtualObjectPrefab;
-        [SerializeField] private Transform spawnLocation;
-        private VirtualObjectHandler m_currentObject;
+        // public VirtualObjectHandler virtualObjectPrefab;
+        // [SerializeField] private Transform spawnLocation;
+        [SerializeField] private VirtualObjectHandler m_currentObject;
 
         [Header("Component Reference")]
         [SerializeField] private TapMechanism tapMechanism;
 
         [Space(5f)]
         [SerializeField] private GameObject timerParent;
-        [SerializeField] private Text countdownText; //! ganti dengan komponen textmeshpro
+        [SerializeField] private TextMeshProUGUI countdownText;
 
-        [Header("Unity Event")]
+        [Space(10f)]
         [Tooltip("is called when timer is start")]
         public UnityEvent OnTimerStart;
         [Tooltip("is called when timer is finish")]
@@ -49,6 +48,8 @@ namespace Smarteye.AR
         private void Start()
         {
             if (timerParent) { timerParent.gameObject.SetActive(false); }
+
+            AssignObjectToTapMechanism();
         }
 
         private void Update()
@@ -76,13 +77,19 @@ namespace Smarteye.AR
                 {
                     Debug.Log($"text component is empty, duration is : {m_currentTime}");
                 }
+
+                if (hours == 0 && minutes == 0 && seconds == 0 && !m_isTimerFinished)
+                {
+                    OnTimerFinish?.Invoke();
+                    m_isTimerFinished = true;
+                    Debug.Log($"timer: {hours} {minutes} {minutes}");
+                }
             }
             else
             {
                 // Timer selesai
                 countdownText.text = "00";
                 isTimerRun = false;
-                OnTimerFinish?.Invoke();
             }
         }
 
@@ -114,8 +121,7 @@ namespace Smarteye.AR
             }
         }
 
-        // panggil fungsi ini ketika marker atau object tidak terdeteksi
-        public void OnMarkerDisappear()
+        public void OnMarkerLost()
         {
             if (m_currentObject)
             {
@@ -156,14 +162,9 @@ namespace Smarteye.AR
             {
                 if (!m_currentObject)
                 {
-                    m_currentObject = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<VirtualObjectHandler>();
+                    // m_currentObject = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<VirtualObjectHandler>();
                     AssignObjectToTapMechanism();
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                OnMarkerDisappear();
             }
 
             if (Input.GetKeyDown(KeyCode.Space))

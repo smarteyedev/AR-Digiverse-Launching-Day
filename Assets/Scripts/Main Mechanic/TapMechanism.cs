@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using TMPro;
 
 namespace Smarteye.AR
 {
@@ -37,10 +38,10 @@ namespace Smarteye.AR
         [SerializeField] private Slider progressSlider;
         private float m_lowerSliderValue = 0.1f;
         [SerializeField] private GameObject panelCountdown;
-        [SerializeField] private Text countdownText; //! should change to TMPro
-        [SerializeField] private Text instructionText; //! should change to TMPro
+        [SerializeField] private TextMeshProUGUI countdownText;
+        [SerializeField] private TextMeshProUGUI instructionText;
         [SerializeField] private GameObject ctaPlank;
-        private Text ctaText; //! should change to TMPro
+        private TextMeshProUGUI ctaText; //! should change to TMPro
         private VirtualObjectHandler currentObject;
 
         [Header("Unity Event")]
@@ -78,7 +79,7 @@ namespace Smarteye.AR
 
             if (isUsingOverlayCanvasMessage)
             {
-                ctaText = ctaPlank.GetComponentInChildren<Text>();
+                ctaText = ctaPlank.GetComponentInChildren<TextMeshProUGUI>();
             }
         }
 
