@@ -221,6 +221,7 @@ namespace Smarteye.AR
         {
             if (m_coundownCoroutine != null)
             {
+                panelCountdown.SetActive(false);
                 StopCoroutine(m_coundownCoroutine);
                 m_coundownCoroutine = null;
             }

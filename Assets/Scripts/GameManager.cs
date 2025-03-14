@@ -147,6 +147,7 @@ namespace Smarteye.AR
             if (!isGamePlaying)
             {
                 uIController.HideStartPanel();
+                tapMechanism.ResetCountdown();
             }
         }
 
