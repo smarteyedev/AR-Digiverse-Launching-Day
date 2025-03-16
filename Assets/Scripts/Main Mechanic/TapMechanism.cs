@@ -24,6 +24,13 @@ namespace Smarteye.AR
         private float m_countdownTime = 0f;
         private float m_countdownDuration = 3f;
 
+        private int _tapCount = 0;
+        public int TapCount
+        {
+            get { return _tapCount; }
+            private set { _tapCount = value; }
+        }
+
         [Header("Configuration")]
         [Range(0f, 1f)]
         [SerializeField] private float increaseSpeed = 0.3f;
@@ -261,12 +268,18 @@ namespace Smarteye.AR
             SetTappingUIActive(true);
         }
 
+        public void ResetTapCount()
+        {
+            TapCount = 0;
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             m_holdTime = 0f;
-
             m_isTapping = true;
             m_timeSinceLastTap = 0f;
+
+            TapCount++;
         }
 
         public void OnPointerUp(PointerEventData eventData)

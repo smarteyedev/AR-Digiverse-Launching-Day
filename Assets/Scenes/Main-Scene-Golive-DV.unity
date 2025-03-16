@@ -1503,7 +1503,7 @@ GameObject:
   - component: {fileID: 329033929}
   - component: {fileID: 329033932}
   - component: {fileID: 329033931}
-  - component: {fileID: 329033930}
+  - component: {fileID: 329033933}
   m_Layer: 5
   m_Name: '[6] Panel-Result-Fail'
   m_TagString: Untagged
@@ -1531,18 +1531,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &329033930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329033928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e28360acfadb4d9c332550a459e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &329033931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1581,6 +1569,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329033928}
   m_CullTransparentMesh: 1
+--- !u!114 &329033933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329033928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba38f96a05c06a498b87c8ea250bb0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 0.5
 --- !u!1 &345682985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,7 +1726,7 @@ GameObject:
   - component: {fileID: 434770948}
   - component: {fileID: 434770951}
   - component: {fileID: 434770950}
-  - component: {fileID: 434770949}
+  - component: {fileID: 434770952}
   m_Layer: 5
   m_Name: '[7] Panel-Quotes'
   m_TagString: Untagged
@@ -1753,18 +1754,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &434770949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 434770947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e28360acfadb4d9c332550a459e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &434770950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1803,6 +1792,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 434770947}
   m_CullTransparentMesh: 1
+--- !u!114 &434770952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434770947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e71dc2268825342870bc8f3cc08542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 0.5
 --- !u!1 &480028438
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,7 +1816,7 @@ GameObject:
   - component: {fileID: 480028439}
   - component: {fileID: 480028442}
   - component: {fileID: 480028441}
-  - component: {fileID: 480028440}
+  - component: {fileID: 480028443}
   m_Layer: 5
   m_Name: '[5] Panel-Result-Success'
   m_TagString: Untagged
@@ -1842,18 +1844,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &480028440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480028438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e28360acfadb4d9c332550a459e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &480028441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1892,6 +1882,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480028438}
   m_CullTransparentMesh: 1
+--- !u!114 &480028443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480028438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba38f96a05c06a498b87c8ea250bb0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 0.5
 --- !u!1 &501329880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2393,7 +2396,7 @@ GameObject:
   - component: {fileID: 820176511}
   - component: {fileID: 820176514}
   - component: {fileID: 820176513}
-  - component: {fileID: 820176512}
+  - component: {fileID: 820176515}
   m_Layer: 5
   m_Name: '[1] Panel-Input-Name'
   m_TagString: Untagged
@@ -2421,18 +2424,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &820176512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 820176510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e28360acfadb4d9c332550a459e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &820176513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2471,6 +2462,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820176510}
   m_CullTransparentMesh: 1
+--- !u!114 &820176515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820176510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3483a305f3e341342ba88031e49c08ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 0.5
 --- !u!1 &852181265
 GameObject:
   m_ObjectHideFlags: 0
@@ -2958,7 +2962,7 @@ GameObject:
   - component: {fileID: 1025477283}
   - component: {fileID: 1025477286}
   - component: {fileID: 1025477285}
-  - component: {fileID: 1025477284}
+  - component: {fileID: 1025477287}
   m_Layer: 5
   m_Name: '[0] Panel-Welcoming'
   m_TagString: Untagged
@@ -2986,18 +2990,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1025477284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025477282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e28360acfadb4d9c332550a459e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1025477285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3036,6 +3028,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025477282}
   m_CullTransparentMesh: 1
+--- !u!114 &1025477287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025477282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3483a305f3e341342ba88031e49c08ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 0.5
 --- !u!1 &1094224209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6535601030796450181, guid: f4abba99d198fe044afc370997762932,
@@ -3722,7 +3727,7 @@ GameObject:
   - component: {fileID: 1379230089}
   - component: {fileID: 1379230092}
   - component: {fileID: 1379230091}
-  - component: {fileID: 1379230090}
+  - component: {fileID: 1379230093}
   m_Layer: 5
   m_Name: '[3] Panel-Start'
   m_TagString: Untagged
@@ -3752,18 +3757,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1379230090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379230088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e28360acfadb4d9c332550a459e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1379230091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3802,6 +3795,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1379230088}
   m_CullTransparentMesh: 1
+--- !u!114 &1379230093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379230088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f54f115ddff1b744a844a19d97c744d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 0.5
 --- !u!1 &1446221981
 GameObject:
   m_ObjectHideFlags: 0
@@ -5001,9 +5007,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1857874629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e28360acfadb4d9c332550a459e2a, type: 3}
+  m_Script: {fileID: 11500000, guid: c15d4cb38481b3c46af42a9faddc2d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeDuration: 0.5
 --- !u!1 &1980763344
 GameObject:
   m_ObjectHideFlags: 0
@@ -7547,7 +7554,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 385.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 104.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5642725134129723235
@@ -7693,7 +7700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4a360139ccef744aa582ce5e36e9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  increaseSpeed: 0.4
+  increaseSpeed: 0.531
   decreaseSpeed: 0.205
   isUsingOverlayCanvasMessage: 0
   progressSlider: {fileID: 1615747654701551497}
@@ -7728,30 +7735,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7958754771465892314}
-        m_TargetAssemblyTypeName: Smarteye.AR.UIController, Assembly-CSharp
-        m_MethodName: ControllerShowPanel
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1094224211}
-        m_TargetAssemblyTypeName: Smarteye.AR.WebRequest.HandlerPlayerCounter, Assembly-CSharp
-        m_MethodName: SendPlayerData
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7853,9 +7836,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5264202917524883663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e28360acfadb4d9c332550a459e2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3483a305f3e341342ba88031e49c08ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeDuration: 0.5
 --- !u!224 &6468408009177587176
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8449,14 +8433,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 269359552}
   panels:
-  - panelHandler: {fileID: 1025477284}
+  - panelHandler: {fileID: 1025477287}
     onPanelOpen:
       m_PersistentCalls:
         m_Calls: []
     onPanelClose:
       m_PersistentCalls:
         m_Calls: []
-  - panelHandler: {fileID: 820176512}
+  - panelHandler: {fileID: 820176515}
     onPanelOpen:
       m_PersistentCalls:
         m_Calls: []
@@ -8470,7 +8454,7 @@ MonoBehaviour:
     onPanelClose:
       m_PersistentCalls:
         m_Calls: []
-  - panelHandler: {fileID: 1379230090}
+  - panelHandler: {fileID: 1379230093}
     onPanelOpen:
       m_PersistentCalls:
         m_Calls: []
@@ -8484,7 +8468,7 @@ MonoBehaviour:
     onPanelClose:
       m_PersistentCalls:
         m_Calls: []
-  - panelHandler: {fileID: 480028440}
+  - panelHandler: {fileID: 480028443}
     onPanelOpen:
       m_PersistentCalls:
         m_Calls:
@@ -8503,7 +8487,7 @@ MonoBehaviour:
     onPanelClose:
       m_PersistentCalls:
         m_Calls: []
-  - panelHandler: {fileID: 329033930}
+  - panelHandler: {fileID: 329033933}
     onPanelOpen:
       m_PersistentCalls:
         m_Calls:
@@ -8522,7 +8506,7 @@ MonoBehaviour:
     onPanelClose:
       m_PersistentCalls:
         m_Calls: []
-  - panelHandler: {fileID: 434770949}
+  - panelHandler: {fileID: 434770952}
     onPanelOpen:
       m_PersistentCalls:
         m_Calls: []

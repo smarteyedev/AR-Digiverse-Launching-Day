@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,6 +21,8 @@ namespace Smarteye.AR
         [HideInInspector] public bool isGamePlaying = false;
         [HideInInspector] public bool playerHasLogged = false;
         public string playerName;
+        public int playerTapCount;
+        public float playerTime;
 
         [Header("Timer Config")]
         [SerializeField] private float timeDuration = 60f;
@@ -106,6 +109,14 @@ namespace Smarteye.AR
             playerName = str;
 
             Debug.Log($"hello player: {str}");
+        }
+
+        public void FinishGame()
+        {
+            float totalTimePlayed = timeDuration - m_currentTime;
+            TimeSpan timeSpan = TimeSpan.FromSeconds(totalTimePlayed);
+
+            Debug.Log($"Game selesai! {playerName} melakukan {playerTapCount} tapping dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.");
         }
         #endregion
 

@@ -40,7 +40,7 @@ namespace Smarteye.AR
         [Serializable]
         public class PanelItem
         {
-            public PanelHandler panelHandler;
+            public PanelHandlerBase panelHandler;
 
             [Space(10f)]
             [Header("Unity Event")]
