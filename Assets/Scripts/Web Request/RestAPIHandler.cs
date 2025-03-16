@@ -26,11 +26,22 @@ namespace VRInnocent.RestAPI
     }
 
     [Serializable]
-    public class RowDataCustom
+    public class RowDataInt
     {
         public Dictionary<string, int> baseData;
 
-        public RowDataCustom(Dictionary<string, int> _baseData)
+        public RowDataInt(Dictionary<string, int> _baseData)
+        {
+            baseData = _baseData;
+        }
+    }
+
+    [Serializable]
+    public class RowDataObject
+    {
+        public Dictionary<string, object> baseData;
+
+        public RowDataObject(Dictionary<string, object> _baseData)
         {
             baseData = _baseData;
         }

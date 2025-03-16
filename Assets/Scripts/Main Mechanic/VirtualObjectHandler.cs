@@ -1,7 +1,7 @@
-using System.Collections;
+
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Smarteye.AR
 {
@@ -11,7 +11,7 @@ namespace Smarteye.AR
         [SerializeField] private List<Animator> characters;
         [SerializeField] private ParticleSystem vfx;
         [SerializeField] private GameObject messageParent;
-        [SerializeField] private Text messageText; //! ganti dengan textmeshpro
+        [SerializeField] private TextMeshProUGUI messageText; //! ganti dengan textmeshpro
 
         public void UpdateCharacterAnimation(float _arg)
         {
@@ -21,15 +21,23 @@ namespace Smarteye.AR
             }
         }
 
-        private void Start()
+        void Start()
         {
-            messageParent.gameObject.SetActive(false);
-            vfx.Stop();
+            ResetDefault();
         }
 
-        private void OnDestroy()
+        void OnEnable()
         {
+            if (messageParent.gameObject.activeSelf)
+            {
+                ShowVFX();
+            }
+        }
 
+        public void ResetDefault()
+        {
+            vfx.Stop();
+            messageParent.gameObject.SetActive(false);
         }
 
         public void ShowVFX()

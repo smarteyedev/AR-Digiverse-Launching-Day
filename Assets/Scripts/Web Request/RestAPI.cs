@@ -31,7 +31,7 @@ namespace VRInnocent.RestAPI
             StartCoroutine(nameof(Post), callbacks);
         }
 
-        public void PostActionCustom(Dictionary<string, int> _data, Action<JObject> success, Action<JObject> err, Action<JObject> dataErr, string _endpointTitle, string uniqValue = "")
+        public void PostActionCustom(Dictionary<string, object> _data, Action<JObject> success, Action<JObject> err, Action<JObject> dataErr, string _endpointTitle, string uniqValue = "")
         {
             endpointTitle = _endpointTitle;
 

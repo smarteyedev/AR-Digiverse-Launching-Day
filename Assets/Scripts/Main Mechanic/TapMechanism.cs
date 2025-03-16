@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using TMPro;
 
 namespace Smarteye.AR
 {
@@ -23,6 +24,19 @@ namespace Smarteye.AR
         private float m_countdownTime = 0f;
         private float m_countdownDuration = 3f;
 
+        private int _tapCount = 0;
+        public int TapCount
+        {
+            get { return _tapCount; }
+            private set { _tapCount = value; }
+        }
+
+        public bool IsFinishedTap
+        {
+            get { return m_currentProgressValue == m_maxProgressValue; }
+            private set { }
+        }
+
         [Header("Configuration")]
         [Range(0f, 1f)]
         [SerializeField] private float increaseSpeed = 0.3f;
@@ -34,19 +48,25 @@ namespace Smarteye.AR
         [SerializeField] bool isUsingOverlayCanvasMessage = false;
 
         [Header("Component Reference")]
+        [SerializeField] private GameManager gameManager;
         [SerializeField] private Slider progressSlider;
         private float m_lowerSliderValue = 0.1f;
         [SerializeField] private GameObject panelCountdown;
-        [SerializeField] private Text countdownText; //! should change to TMPro
-        [SerializeField] private Text instructionText; //! should change to TMPro
+        [SerializeField] private TextMeshProUGUI countdownText;
+        [SerializeField] private TextMeshProUGUI instructionText;
         [SerializeField] private GameObject ctaPlank;
-        private Text ctaText; //! should change to TMPro
-        private VirtualObjectHandler currentObject;
+        private TextMeshProUGUI ctaText;
+        [SerializeField] private VirtualObjectHandler currentObject;
 
         [Header("Unity Event")]
         [Space(5)]
         public UnityEvent OnTapStart;
+
+        [Space(3f)]
+        private bool m_isFinished = true;
         public UnityEvent OnTapFinish;
+
+        [Space(3f)]
         public UnityEvent<float> progressValue;
 
         [Space(15f)]
@@ -67,6 +87,8 @@ namespace Smarteye.AR
             public UnityEvent onProgressReached;
         }
 
+        private Coroutine m_coundownCoroutine = null;
+
         private float m_timeSinceLastTap = 0f;
         private float m_idleThreshold = 1.5f;
         private float m_holdCooldown = .1f; // Cooldown duration 
@@ -78,15 +100,8 @@ namespace Smarteye.AR
 
             if (isUsingOverlayCanvasMessage)
             {
-                ctaText = ctaPlank.GetComponentInChildren<Text>();
+                ctaText = ctaPlank.GetComponentInChildren<TextMeshProUGUI>();
             }
-        }
-
-        public void SetupVirtualObject(VirtualObjectHandler vObj)
-        {
-            currentObject = vObj;
-
-            OnTapFinish.AddListener(vObj.ShowVFX);
         }
 
         void Update()
@@ -110,7 +125,17 @@ namespace Smarteye.AR
 
                 if (progressSlider.value == m_maxProgressValue)
                 {
-                    OnTapFinish?.Invoke();
+                    if (!m_isFinished)
+                    {
+                        currentObject.ShowVFX();
+
+                        OnTapFinish?.Invoke();
+                        Invoke(nameof(OnReachingTarget), 8f);
+                        gameManager.PauseTimer();
+
+                        m_isFinished = true;
+                    }
+
                     m_isCanTapping = false;
 
                     SetTappingUIActive(false);
@@ -145,6 +170,12 @@ namespace Smarteye.AR
             }
         }
 
+        private void OnReachingTarget()
+        {
+            gameManager.FinishGameplay();
+            currentObject.ResetDefault();
+        }
+
         private void CheckProgressMessages(ProgressMessage.Condition condition)
         {
             foreach (var progressMessage in progressMessages)
@@ -172,7 +203,9 @@ namespace Smarteye.AR
         {
             if (m_isCanTapping) return;
 
-            StartCoroutine(CountdownAndStartTapping(onFinishCountdownAction));
+            if (TapCount > 0) { ResetTapCount(); }
+
+            m_coundownCoroutine = StartCoroutine(CountdownAndStartTapping(onFinishCountdownAction));
         }
 
         // Coroutine untuk menampilkan countdown 3, 2, 1 sebelum memulai tapping
@@ -199,7 +232,21 @@ namespace Smarteye.AR
 
             SetTappingUIActive(true);
 
+            m_isFinished = false;
+
             finishAction.Invoke();
+        }
+
+        public void ResetCountdown()
+        {
+            if (m_coundownCoroutine != null)
+            {
+                m_isCanTapping = false;
+                panelCountdown.SetActive(false);
+                StopCoroutine(m_coundownCoroutine);
+                m_coundownCoroutine = null;
+                this.gameObject.SetActive(false);
+            }
         }
 
         public void SetTappingUIActive(bool isActive)
@@ -224,19 +271,36 @@ namespace Smarteye.AR
 
         public void ResetTappingProgress()
         {
-            // m_isCanTapping = false; //! reset default, if needed
-
             m_currentProgressValue = 0;
+
             currentObject.UpdateCharacterAnimation(m_currentProgressValue);
-            progressSlider.value = m_currentProgressValue;
+            progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
+        }
+
+        public void ResetDefault()
+        {
+            m_isFinished = false;
+            ResetTapCount();
+            m_currentProgressValue = 0;
+            m_isCanTapping = false;
+
+            currentObject.UpdateCharacterAnimation(m_currentProgressValue);
+            progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
+        }
+
+        public void ResetTapCount()
+        {
+            TapCount = 0;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
             m_holdTime = 0f;
-
             m_isTapping = true;
             m_timeSinceLastTap = 0f;
+
+            if (m_isCanTapping)
+                TapCount++;
         }
 
         public void OnPointerUp(PointerEventData eventData)

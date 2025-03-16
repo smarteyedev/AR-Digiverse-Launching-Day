@@ -29,7 +29,7 @@ namespace Imagine.WebAR.Samples
                 fps = 1 / (elapsedTime / frameCount);
                 frameCount = 0;
                 elapsedTime = 0;
-                fpsText.text = System.Math.Round(fps, 1).ToString("0.0");
+                fpsText.text = $"{System.Math.Round(fps, 1).ToString("0.0")} fps";
             }
         }
     }

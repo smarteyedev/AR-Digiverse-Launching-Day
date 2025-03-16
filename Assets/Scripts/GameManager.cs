@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
+using Smarteye.AR.WebRequest;
 
 namespace Smarteye.AR
 {
@@ -17,38 +17,47 @@ namespace Smarteye.AR
 
     public class GameManager : MonoBehaviour
     {
+        /* == Main field == */
+        [HideInInspector] public bool playerDataHasSent = false;
+        [HideInInspector] public string playerName;
+
         [Header("Timer Config")]
         [SerializeField] private float timeDuration = 60f;
         private float m_currentTime = 60f;
         private bool isTimerRun = false;
-
-        [Header("Object Prefab")]
-        public VirtualObjectHandler virtualObjectPrefab;
-        [SerializeField] private Transform spawnLocation;
-        private VirtualObjectHandler m_currentObject;
+        private bool m_isTimerFinished = false;
 
         [Header("Component Reference")]
+        [SerializeField] private UIController uIController;
         [SerializeField] private TapMechanism tapMechanism;
+        [SerializeField] private HandlerPlayerCounter webRequestPlayerCounter;
+        [Space(5f)]
+        [SerializeField] private TMP_InputField playernameInput;
+        [SerializeField] private GameObject notNullInputMessage;
 
         [Space(5f)]
         [SerializeField] private GameObject timerParent;
-        [SerializeField] private Text countdownText; //! ganti dengan komponen textmeshpro
+        [SerializeField] private TextMeshProUGUI countdownText;
 
-        [Header("Unity Event")]
+        [Header("Unity Events")]
+        [Tooltip("is called on game start")]
+        public UnityEvent OnStart;
+
+        [Space(10f)]
         [Tooltip("is called when timer is start")]
         public UnityEvent OnTimerStart;
         [Tooltip("is called when timer is finish")]
         public UnityEvent OnTimerFinish;
 
         [Space(10f)]
-        [Tooltip("is called when countdown in tappingMechanism is Finish")]
-        public UnityEvent OnFirstTapping;
-        [Tooltip("is called when player finish the tapping game and progress value is equal to max")]
-        public UnityEvent OnTappingFinished;
+        public UnityEvent OnGameplayStart;
+        public UnityEvent OnPlayerSuccess;
+        public UnityEvent OnPlayerFail;
+        public UnityEvent OnGameplayRestart;
 
         private void Start()
         {
-            if (timerParent) { timerParent.gameObject.SetActive(false); }
+            OnStart?.Invoke();
         }
 
         private void Update()
@@ -76,56 +85,157 @@ namespace Smarteye.AR
                 {
                     Debug.Log($"text component is empty, duration is : {m_currentTime}");
                 }
+
+                if (IsTimerIsFinish() && !m_isTimerFinished)
+                {
+                    OnTimerFinish?.Invoke();
+                    m_isTimerFinished = true;
+                    // Debug.Log($"timer: {hours} {minutes} {minutes}");
+                }
             }
             else
             {
                 // Timer selesai
                 countdownText.text = "00";
                 isTimerRun = false;
-                OnTimerFinish?.Invoke();
             }
         }
+
+        #region Player Data
+        public void SetPlayerName()
+        {
+            if (!string.IsNullOrEmpty(playernameInput.text))
+            {
+                playerName = playernameInput.text;
+                Debug.Log($"hello player: {playernameInput.text}");
+
+                notNullInputMessage.SetActive(false);
+                uIController.ControllerShowPanel(2);
+            }
+            else
+            {
+                notNullInputMessage.SetActive(true);
+                Debug.Log($"player name is null");
+            }
+        }
+
+        private bool IsTimerIsFinish()
+        {
+            int hours = Mathf.FloorToInt(m_currentTime / 3600);
+            int minutes = Mathf.FloorToInt((m_currentTime % 3600) / 60);
+            int seconds = Mathf.FloorToInt(m_currentTime % 60);
+
+            return hours == 0 && minutes == 0 && seconds == 0;
+        }
+
+        public void FinishGameplay()
+        {
+            float totalTimePlayed = timeDuration - m_currentTime;
+            TimeSpan timeSpan = TimeSpan.FromSeconds(totalTimePlayed);
+
+            Debug.Log($"Game selesai! {playerName} melakukan {tapMechanism.TapCount} tapping dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.");
+
+            PauseTimer();
+
+            if (!playerDataHasSent)
+            {
+                webRequestPlayerCounter.SendPlayerData(() =>
+                {
+                    playerDataHasSent = true;
+                });
+
+                /* webRequestPlayerCounter.SendPlayerData(
+                _playerName: playerName,
+                _playerTimer: totalTimePlayed,
+                _playerTapCount: tapMechanism.TapCount,
+                () =>
+                {
+                    playerDataHasSent = true;
+                }); */
+            }
+
+
+            if (!IsTimerIsFinish() && tapMechanism.IsFinishedTap)
+            {
+                OnPlayerSuccess?.Invoke();
+
+                uIController.ShowResultPanel(
+                    true,
+                    $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.)"
+                    );
+            }
+            else
+            {
+                OnPlayerFail?.Invoke();
+
+                uIController.ShowResultPanel(
+                    false,
+                    $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.)"
+                    );
+            }
+
+            ResetTimer();
+        }
+        #endregion
 
         #region Main Function
         /// <summary>
         /// fungsi-fungsi ini digunakan untuk mengatur mekanisme game tapping
         /// </summary>
 
-        // gunakan fungsi ini untuk memasukkan virutal object sebagai object reverensi dari tap mechanism
-        // ketika marker terdeteksi dan object muncul di layar
-        public void AssignObjectToTapMechanism()
-        {
-            tapMechanism.SetupVirtualObject(m_currentObject);
-
-            tapMechanism.OnTapStart.AddListener(() => OnFirstTapping.Invoke());
-            tapMechanism.OnTapFinish.AddListener(() => OnTappingFinished.Invoke());
-        }
-
         // gunakan fungsi ini ketika pertama kali memulai permainan, setelah object virtual muncul di layar
         public void StartTappingGame()
         {
-            if (m_currentObject)
+            if (!isTimerRun)
             {
                 tapMechanism.StartTapping(() =>
                 {
                     StartTimer();
                     timerParent.gameObject.SetActive(true);
+                    OnGameplayStart?.Invoke();
                 });
             }
         }
 
-        // panggil fungsi ini ketika marker atau object tidak terdeteksi
-        public void OnMarkerDisappear()
+        // called in quote panel
+        public void ResetGameplay()
         {
-            if (m_currentObject)
-            {
-                Destroy(m_currentObject.gameObject);
+            ResetTimer();
+            tapMechanism.ResetDefault();
 
-                tapMechanism.SetTappingUIActive(false);
-                tapMechanism.ResetTappingProgress();
+            OnGameplayRestart?.Invoke();
+        }
+
+        public void OnFullScreenSetup(bool isFullScreen)
+        {
+            Screen.fullScreen = isFullScreen;
+        }
+
+        public void OnMarkerFound()
+        {
+            if (!isTimerRun)
+            {
+                if (!tapMechanism.gameObject.activeSelf && m_currentTime == timeDuration)
+                    uIController.ControllerShowPanel(3);
+            }
+            else
+            {
+                uIController.ControllerShowPanel(4);
+                tapMechanism.SetTappingUIActive(true);
             }
         }
 
+        public void OnMarkerLost()
+        {
+            tapMechanism.SetTappingUIActive(false);
+            tapMechanism.ResetTappingProgress();
+
+            if (!isTimerRun)
+            {
+                uIController.HideStartPanel();
+                tapMechanism.ResetCountdown();
+            }
+        }
         #endregion
 
         #region Timer Behaviour
@@ -135,37 +245,28 @@ namespace Smarteye.AR
 
             OnTimerStart?.Invoke();
             isTimerRun = true;
+            m_isTimerFinished = false;
 
             m_currentTime = timeDuration;
         }
 
-        private void PauseTimer()
+        // this function is called in taptap finish event 
+        public void PauseTimer()
         {
             isTimerRun = false;
+            timerParent.SetActive(false);
         }
 
         private void ResetTimer()
         {
             m_currentTime = timeDuration;
+            isTimerRun = false;
+            m_isTimerFinished = false;
         }
         #endregion
 
         private void DebuggingFunction()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                if (!m_currentObject)
-                {
-                    m_currentObject = Instantiate(virtualObjectPrefab, spawnLocation.position, spawnLocation.rotation).GetComponent<VirtualObjectHandler>();
-                    AssignObjectToTapMechanism();
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                OnMarkerDisappear();
-            }
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartTappingGame();
