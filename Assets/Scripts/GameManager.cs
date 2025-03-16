@@ -31,12 +31,15 @@ namespace Smarteye.AR
         private bool m_isTimerFinished = false;
 
         [Header("Component Reference")]
+        [SerializeField] private UIController uIController;
         [SerializeField] private TapMechanism tapMechanism;
+        [Space(5f)]
+        [SerializeField] private TMP_InputField playernameInput;
+        [SerializeField] private GameObject notNullInputMessage;
 
         [Space(5f)]
         [SerializeField] private GameObject timerParent;
         [SerializeField] private TextMeshProUGUI countdownText;
-        [SerializeField] private UIController uIController;
 
         public UnityEvent OnStartGame;
 
@@ -104,11 +107,21 @@ namespace Smarteye.AR
         }
 
         #region Player Data
-        public void ReadPlayerNameInput(string str)
+        public void SetPlayerName()
         {
-            playerName = str;
+            if (!string.IsNullOrEmpty(playernameInput.text))
+            {
+                playerName = playernameInput.text;
+                Debug.Log($"hello player: {playernameInput.text}");
 
-            Debug.Log($"hello player: {str}");
+                notNullInputMessage.SetActive(false);
+                uIController.ControllerShowPanel(2);
+            }
+            else
+            {
+                notNullInputMessage.SetActive(true);
+                Debug.Log($"player name is null");
+            }
         }
 
         public void FinishGame()
