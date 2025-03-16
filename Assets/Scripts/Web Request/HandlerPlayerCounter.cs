@@ -8,16 +8,6 @@ namespace Smarteye.AR.WebRequest
 {
     public class HandlerPlayerCounter : RestAPIHandler
     {
-        private void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
-
         public void SendPlayerData()
         {
             Dictionary<string, int> newPlayer = new Dictionary<string, int>

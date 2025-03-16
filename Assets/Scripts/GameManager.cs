@@ -16,18 +16,16 @@ namespace Smarteye.AR
 
     public class GameManager : MonoBehaviour
     {
+        //! Main field
+        [HideInInspector] public bool isGamePlaying = false;
+        [HideInInspector] public bool playerHasLogged = false;
+        public string playerName;
+
         [Header("Timer Config")]
         [SerializeField] private float timeDuration = 60f;
         private float m_currentTime = 60f;
         private bool isTimerRun = false;
         private bool m_isTimerFinished = false;
-
-        public bool isGamePlaying = false;
-
-        [Header("Object Prefab")]
-        // public VirtualObjectHandler virtualObjectPrefab;
-        // [SerializeField] private Transform spawnLocation;
-        // [SerializeField] private VirtualObjectHandler m_currentObject;
 
         [Header("Component Reference")]
         [SerializeField] private TapMechanism tapMechanism;
@@ -102,6 +100,15 @@ namespace Smarteye.AR
             }
         }
 
+        #region Player Data
+        public void ReadPlayerNameInput(string str)
+        {
+            playerName = str;
+
+            Debug.Log($"hello player: {str}");
+        }
+        #endregion
+
         #region Main Function
         /// <summary>
         /// fungsi-fungsi ini digunakan untuk mengatur mekanisme game tapping
@@ -150,7 +157,6 @@ namespace Smarteye.AR
                 tapMechanism.ResetCountdown();
             }
         }
-
         #endregion
 
         #region Timer Behaviour
@@ -164,7 +170,8 @@ namespace Smarteye.AR
             m_currentTime = timeDuration;
         }
 
-        private void PauseTimer()
+        // this function is called in taptap finish event 
+        public void PauseTimer()
         {
             isTimerRun = false;
         }
