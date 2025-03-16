@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -8,15 +8,35 @@ namespace Smarteye.AR.WebRequest
 {
     public class HandlerPlayerCounter : RestAPIHandler
     {
-        public void SendPlayerData()
+        Action onSuccessAction;
+
+        public void SendPlayerData(Action onComplateAction)
         {
-            Dictionary<string, int> newPlayer = new Dictionary<string, int>
+            onSuccessAction = onComplateAction;
+
+            Dictionary<string, object> newPlayer = new Dictionary<string, object>
             {
                 {"increment", 1}
             };
 
-            RowDataCustom dataObject = new RowDataCustom(newPlayer);
+            RowDataObject dataObject = new RowDataObject(newPlayer);
             restAPI.PostActionCustom(dataObject.baseData, OnSuccessResult, OnProtocolErr, DataProcessingErr, "postdata");
+        }
+
+        public void SendPlayerData(string _playerName, float _playerTimer, int _playerTapCount, Action onComplateAction)
+        {
+            onSuccessAction = onComplateAction;
+
+            Dictionary<string, object> newPlayer = new Dictionary<string, object>
+            {
+                {"increment", 1},
+                {"playerName", _playerName},
+                {"playerTimer", _playerTimer},
+                {"playerTapCount", _playerTapCount}
+            };
+
+            RowDataObject dataObject = new RowDataObject(newPlayer);
+            // restAPI.PostActionCustom(dataObject.baseData, OnSuccessResult, OnProtocolErr, DataProcessingErr, "postdata");
         }
 
         public override void DataProcessingErr(JObject result)
@@ -31,6 +51,8 @@ namespace Smarteye.AR.WebRequest
 
         public override void OnSuccessResult(JObject result)
         {
+            onSuccessAction?.Invoke();
+
             Debug.Log($"success: {result}");
         }
     }

@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Smarteye.AR.WebRequest;
 
 namespace Smarteye.AR
 {
@@ -17,12 +18,9 @@ namespace Smarteye.AR
 
     public class GameManager : MonoBehaviour
     {
-        //! Main field
-        [HideInInspector] public bool isGamePlaying = false;
-        [HideInInspector] public bool playerHasLogged = false;
-        public string playerName;
-        public int playerTapCount;
-        public float playerTime;
+        /* == Main field == */
+        [HideInInspector] public bool playerDataHasSent = false;
+        [HideInInspector] public string playerName;
 
         [Header("Timer Config")]
         [SerializeField] private float timeDuration = 60f;
@@ -33,6 +31,7 @@ namespace Smarteye.AR
         [Header("Component Reference")]
         [SerializeField] private UIController uIController;
         [SerializeField] private TapMechanism tapMechanism;
+        [SerializeField] private HandlerPlayerCounter webRequestPlayerCounter;
         [Space(5f)]
         [SerializeField] private TMP_InputField playernameInput;
         [SerializeField] private GameObject notNullInputMessage;
@@ -41,7 +40,9 @@ namespace Smarteye.AR
         [SerializeField] private GameObject timerParent;
         [SerializeField] private TextMeshProUGUI countdownText;
 
-        public UnityEvent OnStartGame;
+        [Header("Unity Events")]
+        [Tooltip("is called on game start")]
+        public UnityEvent OnStart;
 
         [Space(10f)]
         [Tooltip("is called when timer is start")]
@@ -50,18 +51,14 @@ namespace Smarteye.AR
         public UnityEvent OnTimerFinish;
 
         [Space(10f)]
-        [Tooltip("is called when countdown in tappingMechanism is Finish")]
-        public UnityEvent OnFirstTapping;
-        [Tooltip("is called when player finish the tapping game and progress value is equal to max")]
-        public UnityEvent OnTappingFinished;
+        public UnityEvent OnGameplayStart;
+        public UnityEvent OnPlayerSuccess;
+        public UnityEvent OnPlayerFail;
+        public UnityEvent OnGameplayRestart;
 
         private void Start()
         {
-            if (timerParent) { timerParent.gameObject.SetActive(false); }
-
-            OnStartGame?.Invoke();
-
-            Screen.fullScreen = !Screen.fullScreen;
+            OnStart?.Invoke();
         }
 
         private void Update()
@@ -93,7 +90,6 @@ namespace Smarteye.AR
                 if (hours == 0 && minutes == 0 && seconds == 0 && !m_isTimerFinished)
                 {
                     OnTimerFinish?.Invoke();
-                    PlayingStatus(false);
                     m_isTimerFinished = true;
                     Debug.Log($"timer: {hours} {minutes} {minutes}");
                 }
@@ -124,12 +120,53 @@ namespace Smarteye.AR
             }
         }
 
-        public void FinishGame()
+        public void FinishGameplay()
         {
             float totalTimePlayed = timeDuration - m_currentTime;
             TimeSpan timeSpan = TimeSpan.FromSeconds(totalTimePlayed);
 
-            Debug.Log($"Game selesai! {playerName} melakukan {playerTapCount} tapping dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.");
+            Debug.Log($"Game selesai! {playerName} melakukan {tapMechanism.TapCount} tapping dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.");
+
+            timerParent.SetActive(false);
+
+            if (!playerDataHasSent)
+            {
+                webRequestPlayerCounter.SendPlayerData(() =>
+                {
+                    playerDataHasSent = true;
+                });
+
+                /* webRequestPlayerCounter.SendPlayerData(
+                _playerName: playerName,
+                _playerTimer: totalTimePlayed,
+                _playerTapCount: tapMechanism.TapCount,
+                () =>
+                {
+                    playerDataHasSent = true;
+                }); */
+            }
+
+            if (m_currentTime > 0 && isTimerRun)
+            {
+                OnPlayerSuccess?.Invoke();
+
+                uIController.ShowResultPanel(
+                    true,
+                    $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.)"
+                    );
+            }
+            else
+            {
+                OnPlayerFail?.Invoke();
+
+                uIController.ShowResultPanel(
+                    false,
+                    $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.)"
+                    );
+            }
+
+            PauseTimer();
+            ResetTimer();
         }
         #endregion
 
@@ -141,25 +178,31 @@ namespace Smarteye.AR
         // gunakan fungsi ini ketika pertama kali memulai permainan, setelah object virtual muncul di layar
         public void StartTappingGame()
         {
-            if (!isGamePlaying)
+            if (!isTimerRun)
             {
                 tapMechanism.StartTapping(() =>
                 {
                     StartTimer();
                     timerParent.gameObject.SetActive(true);
-                    PlayingStatus(true);
+                    OnGameplayStart?.Invoke();
                 });
             }
         }
 
-        public void PlayingStatus(bool state)
+        public void ResetGameplay()
         {
-            isGamePlaying = state;
+            ResetTimer();
+            uIController.ControllerShowPanel(0);
+        }
+
+        public void OnFullScreenSetup(bool isFullScreen)
+        {
+            Screen.fullScreen = isFullScreen;
         }
 
         public void OnMarkerFound()
         {
-            if (!isGamePlaying)
+            if (!isTimerRun)
             {
                 uIController.ControllerShowPanel(3);
             }
@@ -175,7 +218,7 @@ namespace Smarteye.AR
             tapMechanism.SetTappingUIActive(false);
             tapMechanism.ResetTappingProgress();
 
-            if (!isGamePlaying)
+            if (!isTimerRun)
             {
                 uIController.HideStartPanel();
                 tapMechanism.ResetCountdown();
@@ -218,11 +261,6 @@ namespace Smarteye.AR
                 tapMechanism.ResetTappingProgress();
                 ResetTimer();
             }
-        }
-
-        public void ResetScene(string sceneName)
-        {
-            SceneManager.LoadScene(sceneName);
         }
     }
 }

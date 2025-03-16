@@ -97,13 +97,6 @@ namespace Smarteye.AR
             }
         }
 
-        public void SetupVirtualObject(VirtualObjectHandler vObj)
-        {
-            // currentObject = vObj;
-
-            // OnTapFinish.AddListener(vObj.ShowVFX);
-        }
-
         void Update()
         {
             if (m_isCanTapping == false) return;
@@ -256,13 +249,12 @@ namespace Smarteye.AR
 
         public void ResetTappingProgress()
         {
-            // m_isCanTapping = false; //! reset default, if needed
-
             m_currentProgressValue = 0;
             currentObject.UpdateCharacterAnimation(m_currentProgressValue);
             progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
         }
 
+        // dipanggil setelah rescan marker on playing game
         public void ContinueTapping()
         {
             SetTappingUIActive(true);

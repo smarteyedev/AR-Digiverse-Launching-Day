@@ -10,6 +10,23 @@ namespace Smarteye.AR
         [SerializeField] private GameManager gameManager;
         [SerializeField] private List<PanelItem> panels;
 
+        [Serializable]
+        public class PanelItem
+        {
+            public PanelHandlerBase panelHandler;
+
+            [Space(10f)]
+            [Header("Unity Event")]
+            public UnityEvent onPanelOpen;
+            [Space(2f)]
+            public UnityEvent onPanelClose;
+        }
+
+        private void Start()
+        {
+            ControllerShowPanel(0);
+        }
+
         public void ControllerShowPanel(int panelIndex)
         {
             for (int i = 0; i < panels.Count; i++)
@@ -37,21 +54,20 @@ namespace Smarteye.AR
             panels[3].panelHandler.PanelVisibility(false);
         }
 
-        [Serializable]
-        public class PanelItem
+        public void ShowResultPanel(bool isSuccess, string result)
         {
-            public PanelHandlerBase panelHandler;
-
-            [Space(10f)]
-            [Header("Unity Event")]
-            public UnityEvent onPanelOpen;
-            [Space(2f)]
-            public UnityEvent onPanelClose;
-        }
-
-        private void Start()
-        {
-            ControllerShowPanel(0);
+            if (isSuccess)
+            {
+                ResultPanelHandler handler = (ResultPanelHandler)panels[5].panelHandler;
+                handler.PanelVisibility(true);
+                handler.ShowResultSuccess(result);
+            }
+            else
+            {
+                ResultPanelHandler handler = (ResultPanelHandler)panels[6].panelHandler;
+                handler.PanelVisibility(true);
+                handler.ShowResultFail(result);
+            }
         }
     }
 }
