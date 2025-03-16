@@ -207,21 +207,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 434770947}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Main-Scene-Golive-DV
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6521219258184994524}
-        m_TargetAssemblyTypeName: Imagine.WebAR.ImageTracker, Assembly-CSharp
-        m_MethodName: StartTracker
+      - m_Target: {fileID: 269359552}
+        m_TargetAssemblyTypeName: Smarteye.AR.GameManager, Assembly-CSharp
+        m_MethodName: ResetGameplay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1076,6 +1064,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: OnMarkerDisappear.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -1216,6 +1209,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: OnMarkerDisappear.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
       objectReference: {fileID: 0}
@@ -1266,6 +1269,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 434770947}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6521219258184994524}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: OnMarkerDisappear.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1857874629}
@@ -1306,6 +1319,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: OnMarkerDetected.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
@@ -1313,6 +1336,16 @@ PrefabInstance:
         type: 3}
       propertyPath: OnMarkerDisappear.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StartTracker
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
@@ -1406,6 +1439,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Imagine.WebAR.ImageTracker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
       propertyPath: OnMarkerDisappear.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
@@ -1467,6 +1510,16 @@ PrefabInstance:
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnMarkerDetected.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
+        type: 3}
+      propertyPath: OnGameplayRestart.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,

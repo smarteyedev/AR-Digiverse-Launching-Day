@@ -90,7 +90,7 @@ namespace Smarteye.AR
                 {
                     OnTimerFinish?.Invoke();
                     m_isTimerFinished = true;
-                    Debug.Log($"timer: {hours} {minutes} {minutes}");
+                    // Debug.Log($"timer: {hours} {minutes} {minutes}");
                 }
             }
             else
@@ -197,11 +197,11 @@ namespace Smarteye.AR
             }
         }
 
+        // called in quote panel
         public void ResetGameplay()
         {
             ResetTimer();
-            tapMechanism.ResetTappingProgress();
-            uIController.ControllerShowPanel(0);
+            tapMechanism.ResetDefault();
 
             OnGameplayRestart?.Invoke();
         }
@@ -245,6 +245,7 @@ namespace Smarteye.AR
 
             OnTimerStart?.Invoke();
             isTimerRun = true;
+            m_isTimerFinished = false;
 
             m_currentTime = timeDuration;
         }

@@ -63,7 +63,7 @@ namespace Smarteye.AR
         public UnityEvent OnTapStart;
 
         [Space(3f)]
-        private bool isFinished = true;
+        private bool m_isFinished = true;
         public UnityEvent OnTapFinish;
 
         [Space(3f)]
@@ -125,7 +125,7 @@ namespace Smarteye.AR
 
                 if (progressSlider.value == m_maxProgressValue)
                 {
-                    if (!isFinished)
+                    if (!m_isFinished)
                     {
                         currentObject.ShowVFX();
 
@@ -133,7 +133,7 @@ namespace Smarteye.AR
                         Invoke(nameof(OnReachingTarget), 8f);
                         gameManager.PauseTimer();
 
-                        isFinished = true;
+                        m_isFinished = true;
                     }
 
                     m_isCanTapping = false;
@@ -232,7 +232,7 @@ namespace Smarteye.AR
 
             SetTappingUIActive(true);
 
-            isFinished = false;
+            m_isFinished = false;
 
             finishAction.Invoke();
         }
@@ -272,6 +272,17 @@ namespace Smarteye.AR
         public void ResetTappingProgress()
         {
             m_currentProgressValue = 0;
+
+            currentObject.UpdateCharacterAnimation(m_currentProgressValue);
+            progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
+        }
+
+        public void ResetDefault()
+        {
+            m_isFinished = false;
+            ResetTapCount();
+            m_currentProgressValue = 0;
+            m_isCanTapping = false;
 
             currentObject.UpdateCharacterAnimation(m_currentProgressValue);
             progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
