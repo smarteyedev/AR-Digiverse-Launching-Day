@@ -86,7 +86,7 @@ namespace Smarteye.AR
                     Debug.Log($"text component is empty, duration is : {m_currentTime}");
                 }
 
-                if (hours == 0 && minutes == 0 && seconds == 0 && !m_isTimerFinished)
+                if (IsTimerIsFinish() && !m_isTimerFinished)
                 {
                     OnTimerFinish?.Invoke();
                     m_isTimerFinished = true;
@@ -119,6 +119,15 @@ namespace Smarteye.AR
             }
         }
 
+        private bool IsTimerIsFinish()
+        {
+            int hours = Mathf.FloorToInt(m_currentTime / 3600);
+            int minutes = Mathf.FloorToInt((m_currentTime % 3600) / 60);
+            int seconds = Mathf.FloorToInt(m_currentTime % 60);
+
+            return hours == 0 && minutes == 0 && seconds == 0;
+        }
+
         public void FinishGameplay()
         {
             float totalTimePlayed = timeDuration - m_currentTime;
@@ -145,7 +154,8 @@ namespace Smarteye.AR
                 }); */
             }
 
-            if (m_currentTime > 0)
+
+            if (!IsTimerIsFinish() && tapMechanism.IsFinishedTap)
             {
                 OnPlayerSuccess?.Invoke();
 
@@ -249,6 +259,8 @@ namespace Smarteye.AR
         private void ResetTimer()
         {
             m_currentTime = timeDuration;
+            isTimerRun = false;
+            m_isTimerFinished = false;
         }
         #endregion
 

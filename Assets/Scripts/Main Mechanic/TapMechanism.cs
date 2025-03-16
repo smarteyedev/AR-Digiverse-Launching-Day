@@ -31,6 +31,12 @@ namespace Smarteye.AR
             private set { _tapCount = value; }
         }
 
+        public bool IsFinishedTap
+        {
+            get { return m_currentProgressValue == m_maxProgressValue; }
+            private set { }
+        }
+
         [Header("Configuration")]
         [Range(0f, 1f)]
         [SerializeField] private float increaseSpeed = 0.3f;

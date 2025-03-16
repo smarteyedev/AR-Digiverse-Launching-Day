@@ -26,6 +26,14 @@ namespace Smarteye.AR
             ResetDefault();
         }
 
+        void OnEnable()
+        {
+            if (messageParent.gameObject.activeSelf)
+            {
+                ShowVFX();
+            }
+        }
+
         public void ResetDefault()
         {
             vfx.Stop();
