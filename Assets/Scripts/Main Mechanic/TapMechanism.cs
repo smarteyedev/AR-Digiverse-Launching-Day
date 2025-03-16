@@ -42,6 +42,7 @@ namespace Smarteye.AR
         [SerializeField] bool isUsingOverlayCanvasMessage = false;
 
         [Header("Component Reference")]
+        [SerializeField] private GameManager gameManager;
         [SerializeField] private Slider progressSlider;
         private float m_lowerSliderValue = 0.1f;
         [SerializeField] private GameObject panelCountdown;
@@ -120,7 +121,12 @@ namespace Smarteye.AR
                 {
                     if (!isFinished)
                     {
+                        currentObject.ShowVFX();
+
                         OnTapFinish?.Invoke();
+                        Invoke(nameof(OnReachingTarget), 8f);
+                        gameManager.PauseTimer();
+
                         isFinished = true;
                     }
 
@@ -158,6 +164,12 @@ namespace Smarteye.AR
             }
         }
 
+        private void OnReachingTarget()
+        {
+            gameManager.FinishGameplay();
+            currentObject.ResetDefault();
+        }
+
         private void CheckProgressMessages(ProgressMessage.Condition condition)
         {
             foreach (var progressMessage in progressMessages)
@@ -184,6 +196,8 @@ namespace Smarteye.AR
         public void StartTapping(Action onFinishCountdownAction)
         {
             if (m_isCanTapping) return;
+
+            if (TapCount > 0) { ResetTapCount(); }
 
             m_coundownCoroutine = StartCoroutine(CountdownAndStartTapping(onFinishCountdownAction));
         }
@@ -221,9 +235,11 @@ namespace Smarteye.AR
         {
             if (m_coundownCoroutine != null)
             {
+                m_isCanTapping = false;
                 panelCountdown.SetActive(false);
                 StopCoroutine(m_coundownCoroutine);
                 m_coundownCoroutine = null;
+                this.gameObject.SetActive(false);
             }
         }
 
@@ -250,14 +266,9 @@ namespace Smarteye.AR
         public void ResetTappingProgress()
         {
             m_currentProgressValue = 0;
+
             currentObject.UpdateCharacterAnimation(m_currentProgressValue);
             progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
-        }
-
-        // dipanggil setelah rescan marker on playing game
-        public void ContinueTapping()
-        {
-            SetTappingUIActive(true);
         }
 
         public void ResetTapCount()
@@ -271,7 +282,8 @@ namespace Smarteye.AR
             m_isTapping = true;
             m_timeSinceLastTap = 0f;
 
-            TapCount++;
+            if (m_isCanTapping)
+                TapCount++;
         }
 
         public void OnPointerUp(PointerEventData eventData)

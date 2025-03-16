@@ -1,21 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Smarteye.AR
 {
     public class QuotesPanelHandler : PanelHandlerBase
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        [Header("Configuration")]
+        [SerializeField] private int waitingDuration;
+        [Header("Additional Reference")]
+        [SerializeField] private Button resetButton;
+        [SerializeField] private TextMeshProUGUI btnText;
 
+        protected override void FirstOpenPanel()
+        {
+            base.FirstOpenPanel();
+
+            StartCoroutine(WaitingBtnActivation());
         }
 
-        // Update is called once per frame
-        void Update()
+        private IEnumerator WaitingBtnActivation()
         {
+            resetButton.interactable = false;
 
+            for (int i = waitingDuration; i > 0; i--)
+            {
+                btnText.text = $"tunggu {i} detik lagi ...";
+                yield return new WaitForSeconds(1f);
+            }
+
+            btnText.text = $"Main Lagi";
+            resetButton.interactable = true;
         }
     }
 }

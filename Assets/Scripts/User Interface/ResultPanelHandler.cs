@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ namespace Smarteye.AR
 {
     public class ResultPanelHandler : PanelHandlerBase
     {
+        [Range(3f, 10f)]
+        [SerializeField] private float delayButtonNext = 7f;
+
         [Header("Additional Reference")]
         [SerializeField] private TextMeshProUGUI resultText;
         [SerializeField] private GameObject screenshootMessage;
@@ -16,7 +20,7 @@ namespace Smarteye.AR
             screenshootMessage.SetActive(true);
             buttonNext.SetActive(false);
 
-            Invoke(nameof(ShowNextButton), 3f);
+            Invoke(nameof(ShowNextButton), delayButtonNext);
         }
 
         public void ShowResultFail(string message)

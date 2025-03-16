@@ -21,15 +21,15 @@ namespace Smarteye.AR
             }
         }
 
-        private void Start()
+        void Start()
         {
-            messageParent.gameObject.SetActive(false);
-            vfx.Stop();
+            ResetDefault();
         }
 
-        private void OnDestroy()
+        public void ResetDefault()
         {
-
+            vfx.Stop();
+            messageParent.gameObject.SetActive(false);
         }
 
         public void ShowVFX()

@@ -207,16 +207,28 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269359552}
-        m_TargetAssemblyTypeName: Smarteye.AR.GameManager, Assembly-CSharp
-        m_MethodName: ResetScene
-        m_Mode: 5
+      - m_Target: {fileID: 434770947}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Main-Scene-Golive-DV
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6521219258184994524}
+        m_TargetAssemblyTypeName: Imagine.WebAR.ImageTracker, Assembly-CSharp
+        m_MethodName: StartTracker
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &18000776
@@ -239,7 +251,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f0d03dd543b3fbc4fa2dac1f4da43150, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a811770e2c4184046b69f60c6a45920f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1055,7 +1067,7 @@ PrefabInstance:
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnPlayerSuccess.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
@@ -1170,7 +1182,7 @@ PrefabInstance:
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnPlayerSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
@@ -1216,7 +1228,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnPlayerSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 7958754771465892314}
+      objectReference: {fileID: 6521219258184994524}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnStartGame.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -1290,7 +1302,7 @@ PrefabInstance:
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnPlayerSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ControllerShowPanel
+      value: StopTracker
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
@@ -1380,7 +1392,7 @@ PrefabInstance:
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnPlayerSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Smarteye.AR.UIController, Assembly-CSharp
+      value: Imagine.WebAR.ImageTracker, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
@@ -1390,7 +1402,7 @@ PrefabInstance:
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
       propertyPath: OnPlayerSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7288352555483747224, guid: f4abba99d198fe044afc370997762932,
         type: 3}
@@ -1793,6 +1805,7 @@ MonoBehaviour:
   StretchOutDuration: 0.5
   canvasGroup: {fileID: 329033934}
   popupTransform: {fileID: 1165512322}
+  delayButtonNext: 7
   resultText: {fileID: 1792511164}
   screenshootMessage: {fileID: 0}
   buttonNext: {fileID: 852181265}
@@ -2087,8 +2100,8 @@ GameObject:
   - component: {fileID: 434770948}
   - component: {fileID: 434770951}
   - component: {fileID: 434770950}
-  - component: {fileID: 434770952}
   - component: {fileID: 434770953}
+  - component: {fileID: 434770952}
   m_Layer: 5
   m_Name: '[7] Panel-Quotes'
   m_TagString: Untagged
@@ -2172,6 +2185,9 @@ MonoBehaviour:
   StretchOutDuration: 0.5
   canvasGroup: {fileID: 434770953}
   popupTransform: {fileID: 1663636618}
+  waitingDuration: 5
+  resetButton: {fileID: 18000775}
+  btnText: {fileID: 966975427}
 --- !u!225 &434770953
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2274,12 +2290,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba38f96a05c06a498b87c8ea250bb0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeInDuration: 0.5
+  fadeInDuration: 1
   fadeOutDuration: 0.5
   StretchInDuration: 0.5
   StretchOutDuration: 0.5
   canvasGroup: {fileID: 480028444}
   popupTransform: {fileID: 516496177}
+  delayButtonNext: 7
   resultText: {fileID: 1577579380}
   screenshootMessage: {fileID: 1047458520}
   buttonNext: {fileID: 345682985}
@@ -3032,7 +3049,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &966975426
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3049,8 +3066,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 9.096}
+  m_SizeDelta: {x: 0, y: -39.409}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &966975427
 MonoBehaviour:
@@ -3072,17 +3089,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: tunggu {i} detik lagi ...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c211c40bfd941b94e9d882a7b4fc270e, type: 2}
+  m_sharedMaterial: {fileID: 587928230741384204, guid: c211c40bfd941b94e9d882a7b4fc270e,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8142,7 +8160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 385.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 104.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5642725134129723235
@@ -8291,6 +8309,7 @@ MonoBehaviour:
   increaseSpeed: 0.531
   decreaseSpeed: 0.205
   isUsingOverlayCanvasMessage: 0
+  gameManager: {fileID: 269359552}
   progressSlider: {fileID: 1615747654701551497}
   panelCountdown: {fileID: 3284446861271071957}
   countdownText: {fileID: 1182167218}
@@ -8323,42 +8342,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8108707589394996511}
-        m_TargetAssemblyTypeName: Smarteye.AR.VirtualObjectHandler, Assembly-CSharp
-        m_MethodName: ShowVFX
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6521219258184994524}
-        m_TargetAssemblyTypeName: Imagine.WebAR.ImageTracker, Assembly-CSharp
-        m_MethodName: StopTracker
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 269359552}
-        m_TargetAssemblyTypeName: Smarteye.AR.GameManager, Assembly-CSharp
-        m_MethodName: FinishGameplay
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

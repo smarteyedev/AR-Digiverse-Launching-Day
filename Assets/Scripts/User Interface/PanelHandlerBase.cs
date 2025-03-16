@@ -31,7 +31,7 @@ namespace Smarteye.AR
             }
         }
 
-        protected void FirstOpenPanel()
+        protected virtual void FirstOpenPanel()
         {
             if (popupTransform != null)
             {

@@ -2,7 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using Smarteye.AR.WebRequest;
 
 namespace Smarteye.AR
@@ -127,7 +126,7 @@ namespace Smarteye.AR
 
             Debug.Log($"Game selesai! {playerName} melakukan {tapMechanism.TapCount} tapping dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.");
 
-            timerParent.SetActive(false);
+            PauseTimer();
 
             if (!playerDataHasSent)
             {
@@ -146,7 +145,7 @@ namespace Smarteye.AR
                 }); */
             }
 
-            if (m_currentTime > 0 && isTimerRun)
+            if (m_currentTime > 0)
             {
                 OnPlayerSuccess?.Invoke();
 
@@ -165,7 +164,6 @@ namespace Smarteye.AR
                     );
             }
 
-            PauseTimer();
             ResetTimer();
         }
         #endregion
@@ -192,7 +190,10 @@ namespace Smarteye.AR
         public void ResetGameplay()
         {
             ResetTimer();
+            tapMechanism.ResetTappingProgress();
             uIController.ControllerShowPanel(0);
+
+            OnGameplayRestart?.Invoke();
         }
 
         public void OnFullScreenSetup(bool isFullScreen)
@@ -204,7 +205,8 @@ namespace Smarteye.AR
         {
             if (!isTimerRun)
             {
-                uIController.ControllerShowPanel(3);
+                if (!tapMechanism.gameObject.activeSelf && m_currentTime == timeDuration)
+                    uIController.ControllerShowPanel(3);
             }
             else
             {
@@ -241,6 +243,7 @@ namespace Smarteye.AR
         public void PauseTimer()
         {
             isTimerRun = false;
+            timerParent.SetActive(false);
         }
 
         private void ResetTimer()
