@@ -271,8 +271,9 @@ namespace Smarteye.AR
 
         public void ResetTappingProgress()
         {
-            m_currentProgressValue = 0;
+            if (m_isFinished) return;
 
+            m_currentProgressValue = 0;
             currentObject.UpdateCharacterAnimation(m_currentProgressValue);
             progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
         }

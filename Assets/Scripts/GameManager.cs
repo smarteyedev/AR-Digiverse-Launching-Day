@@ -162,6 +162,7 @@ namespace Smarteye.AR
                 uIController.ShowResultPanel(
                     true,
                     $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.)"
+                    // $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {totalTimePlayed} detik.)"
                     );
             }
             else
@@ -171,6 +172,7 @@ namespace Smarteye.AR
                 uIController.ShowResultPanel(
                     false,
                     $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.)"
+                    // $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {totalTimePlayed} detik.)"
                     );
             }
 
