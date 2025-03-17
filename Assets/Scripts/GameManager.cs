@@ -104,19 +104,19 @@ namespace Smarteye.AR
         #region Player Data
         public void SetPlayerName()
         {
-            // if (!string.IsNullOrEmpty(playernameInput.text))
-            // {
-            playerName = playernameInput.text;
-            Debug.Log($"hello player: {playernameInput.text}");
+            if (!string.IsNullOrEmpty(playernameInput.text))
+            {
+                playerName = playernameInput.text;
+                Debug.Log($"hello player: {playernameInput.text}");
 
-            notNullInputMessage.SetActive(false);
-            uIController.ControllerShowPanel(2);
-            // }
-            // else
-            // {
-            //     notNullInputMessage.SetActive(true);
-            //     Debug.Log($"player name is null");
-            // }
+                notNullInputMessage.SetActive(false);
+                uIController.ControllerShowPanel(2);
+            }
+            else
+            {
+                notNullInputMessage.SetActive(true);
+                Debug.Log($"player name is null");
+            }
         }
 
         private bool IsTimerIsFinish()
