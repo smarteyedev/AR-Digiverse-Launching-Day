@@ -26,12 +26,10 @@ namespace Smarteye.AR
             ResetDefault();
         }
 
-        void OnEnable()
+        public void ShowFinalAnimation()
         {
-            if (messageParent.gameObject.activeSelf)
-            {
-                ShowVFX();
-            }
+            UpdateCharacterAnimation(1f);
+            ShowVFX();
         }
 
         public void ResetDefault()

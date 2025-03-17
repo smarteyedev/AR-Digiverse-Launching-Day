@@ -33,7 +33,8 @@ namespace Smarteye.AR
 
         public bool IsFinishedTap
         {
-            get { return m_currentProgressValue == m_maxProgressValue; }
+            //! get { return m_currentProgressValue == m_maxProgressValue; }
+            get { return progressSlider.value == m_maxProgressValue; }
             private set { }
         }
 
@@ -123,20 +124,19 @@ namespace Smarteye.AR
 
                 CheckProgressMessages(ProgressMessage.Condition.OnIncrease);
 
-                if (progressSlider.value == m_maxProgressValue)
+                //! if (progressSlider.value == m_maxProgressValue)
+                if (IsFinishedTap)
                 {
                     if (!m_isFinished)
                     {
                         currentObject.ShowVFX();
 
                         OnTapFinish?.Invoke();
-                        Invoke(nameof(OnReachingTarget), 8f);
+                        Invoke(nameof(OnReachingTarget), 6f);
                         gameManager.PauseTimer();
 
                         m_isFinished = true;
                     }
-
-                    m_isCanTapping = false;
 
                     SetTappingUIActive(false);
 
@@ -251,7 +251,11 @@ namespace Smarteye.AR
 
         public void SetTappingUIActive(bool isActive)
         {
-            if (m_isFinished) return;
+            if (IsFinishedTap)
+            {
+                currentObject.ShowFinalAnimation();
+                return;
+            }
 
             if (instructionText)
             {
@@ -273,9 +277,12 @@ namespace Smarteye.AR
 
         public void ResetTappingProgress()
         {
-            if (m_isFinished) return;
+            /* if (!IsFinishedTap && !m_isFinished)
+            {
+                m_currentProgressValue = 0;
+            } */
 
-            m_currentProgressValue = 0;
+            m_isTapping = false;
             currentObject.UpdateCharacterAnimation(m_currentProgressValue);
             progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
         }
