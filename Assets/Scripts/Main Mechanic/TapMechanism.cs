@@ -251,6 +251,8 @@ namespace Smarteye.AR
 
         public void SetTappingUIActive(bool isActive)
         {
+            if (m_isFinished) return;
+
             if (instructionText)
             {
                 instructionText.gameObject.SetActive(isActive);
