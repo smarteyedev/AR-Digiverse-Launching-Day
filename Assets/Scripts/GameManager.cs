@@ -139,19 +139,19 @@ namespace Smarteye.AR
 
             if (!playerDataHasSent)
             {
-                webRequestPlayerCounter.SendPlayerData(() =>
-                {
-                    playerDataHasSent = true;
-                });
+                // webRequestPlayerCounter.SendPlayerData(() =>
+                // {
+                //     playerDataHasSent = true;
+                // });
 
-                /* webRequestPlayerCounter.SendPlayerData(
+                webRequestPlayerCounter.SendPlayerData(
                 _playerName: playerName,
                 _playerTimer: totalTimePlayed,
                 _playerTapCount: tapMechanism.TapCount,
                 () =>
                 {
                     playerDataHasSent = true;
-                }); */
+                });
             }
 
 
