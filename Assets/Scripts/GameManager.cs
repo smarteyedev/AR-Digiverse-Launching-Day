@@ -139,10 +139,10 @@ namespace Smarteye.AR
 
             if (!playerDataHasSent)
             {
-                // webRequestPlayerCounter.SendPlayerData(() =>
-                // {
-                //     playerDataHasSent = true;
-                // });
+                webRequestPlayerCounter.SendPlayerData(() =>
+                {
+                    playerDataHasSent = true;
+                });
 
                 webRequestPlayerCounter.SendPlayerData(
                 _playerName: playerName,

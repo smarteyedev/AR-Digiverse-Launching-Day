@@ -120,7 +120,7 @@ namespace Smarteye.AR
                     return;
                 }
 
-                m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, m_maxProgressValue, increaseSpeed * Time.deltaTime);
+                m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, m_maxProgressValue, increaseSpeed * Time.fixedDeltaTime);
 
                 CheckProgressMessages(ProgressMessage.Condition.OnIncrease);
 
@@ -135,6 +135,8 @@ namespace Smarteye.AR
                         Invoke(nameof(OnReachingTarget), 6f);
                         gameManager.PauseTimer();
 
+                        currentObject.ShowFinalAnimation();
+
                         m_isFinished = true;
                     }
 
@@ -146,27 +148,30 @@ namespace Smarteye.AR
             }
             else
             {
-                m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, 0f, decreaseSpeed * Time.deltaTime);
-
-                // Timer untuk cek waktu idle
-                m_timeSinceLastTap += Time.deltaTime;
-
-                if (m_timeSinceLastTap >= m_idleThreshold)
+                if (!IsFinishedTap)
                 {
-                    CheckProgressMessages(ProgressMessage.Condition.OnDecrease);
-                }
+                    m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, 0f, decreaseSpeed * Time.fixedDeltaTime);
 
-                // Debug.Log(m_timeSinceLastTap);
+                    // Timer untuk cek waktu idle
+                    m_timeSinceLastTap += Time.deltaTime;
+                    if (m_timeSinceLastTap >= m_idleThreshold)
+                    {
+                        CheckProgressMessages(ProgressMessage.Condition.OnDecrease);
+                    }
+                }
             }
 
-            if (progressSlider) { progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue; }
-
-            if (currentObject)
-            { currentObject.UpdateCharacterAnimation(m_currentProgressValue); }
-
-            if (Mathf.Abs(m_currentProgressValue - progressSlider.value) > 0.01f)
+            if (!IsFinishedTap)
             {
-                progressValue?.Invoke(m_currentProgressValue);
+                if (progressSlider) { progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue; }
+
+                if (currentObject)
+                { currentObject.UpdateCharacterAnimation(m_currentProgressValue); }
+
+                if (Mathf.Abs(m_currentProgressValue - progressSlider.value) > 0.01f)
+                {
+                    progressValue?.Invoke(m_currentProgressValue);
+                }
             }
         }
 
@@ -215,6 +220,8 @@ namespace Smarteye.AR
                 panelCountdown.SetActive(true);
 
             m_countdownTime = m_countdownDuration;
+
+            SetTappingUIActive(false);
 
             for (int i = (int)m_countdownTime; i > 0; i--)
             {

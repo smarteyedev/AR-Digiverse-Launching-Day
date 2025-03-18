@@ -2132,8 +2132,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000022888, y: 91}
-  m_SizeDelta: {x: 469.821, y: 94.722}
+  m_AnchoredPosition: {x: -0.000015259, y: 111}
+  m_SizeDelta: {x: 651.015, y: 131.253}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &345682987
 MonoBehaviour:
@@ -3033,7 +3033,7 @@ PrefabInstance:
     - target: {fileID: 6275315161778723152, guid: c05ff9432700e4f379c19941ed39cd21,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6275315161778723153, guid: c05ff9432700e4f379c19941ed39cd21,
         type: 3}
@@ -3118,7 +3118,7 @@ PrefabInstance:
     - target: {fileID: 6275315161778723153, guid: c05ff9432700e4f379c19941ed39cd21,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000015259
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6275315161778723153, guid: c05ff9432700e4f379c19941ed39cd21,
         type: 3}
@@ -4344,7 +4344,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.000005722, y: 0.00002861}
-  m_SizeDelta: {x: 810.774, y: 862.251}
+  m_SizeDelta: {x: 840, y: 948}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &516496178
 MonoBehaviour:
@@ -4872,8 +4872,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000022888, y: 91}
-  m_SizeDelta: {x: 469.821, y: 94.722}
+  m_AnchoredPosition: {x: -0.000015259, y: 111}
+  m_SizeDelta: {x: 651.015, y: 131.253}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &852181267
 MonoBehaviour:
@@ -5512,8 +5512,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.4
-  m_fontSizeBase: 30.4
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5631,7 +5631,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.000005722, y: 0.00002861}
-  m_SizeDelta: {x: 810.774, y: 862.251}
+  m_SizeDelta: {x: 840, y: 948}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1165512323
 MonoBehaviour:
@@ -6550,8 +6550,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00028992, y: -150}
-  m_SizeDelta: {x: 602.2, y: 50}
+  m_AnchoredPosition: {x: -0.00028992, y: -155.99995}
+  m_SizeDelta: {x: 602.2, y: 90.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1577579380
 MonoBehaviour:
@@ -6585,8 +6585,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287264256
-  m_fontColor: {r: 0, g: 0.4627451, b: 0.5411765, a: 1}
+    rgba: 4286935142
+  m_fontColor: {r: 0.4, g: 0.4392157, b: 0.52156866, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6603,8 +6603,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6617,7 +6617,7 @@ MonoBehaviour:
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
-  m_paragraphSpacing: 19.12
+  m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
@@ -7392,8 +7392,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00028992, y: -150}
-  m_SizeDelta: {x: 602.2, y: 50}
+  m_AnchoredPosition: {x: -0.00028992, y: -156}
+  m_SizeDelta: {x: 602.2, y: 90.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1792511164
 MonoBehaviour:
@@ -7445,8 +7445,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -19357,9 +19357,9 @@ MonoBehaviour:
   trackedIds: []
   trackerSettings:
     maxSimultaneousTargets: 1
-    targetFrameRate: 60
+    targetFrameRate: 30
     advancedSettings:
-      maxFrameLength: 500
+      maxFrameLength: 300
       maxFrameArea: 80
       trackedPoints: 80
       poseCorrectionInterval: 1500
