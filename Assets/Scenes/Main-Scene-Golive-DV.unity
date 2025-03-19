@@ -2469,7 +2469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 456166944}
   m_Layer: 5
-  m_Name: (target) Phone-secondpos
+  m_Name: '[target] Phone-secondpos'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4565,8 +4565,8 @@ RectTransform:
   m_GameObject: {fileID: 538950454}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 581106646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4644,6 +4644,7 @@ RectTransform:
   - {fileID: 995075352}
   - {fileID: 538950455}
   - {fileID: 1546640871}
+  - {fileID: 675773465}
   m_Father: {fileID: 1770071094}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5036,6 +5037,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638489169}
   m_CullTransparentMesh: 1
+--- !u!1 &675773464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 675773465}
+  m_Layer: 5
+  m_Name: '[target] finger'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &675773465
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675773464}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 581106646}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 7.6500225, y: -25.650024}
+  m_SizeDelta: {x: 132, y: 152}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &820176510
 GameObject:
   m_ObjectHideFlags: 0
@@ -5294,7 +5330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 909501458}
   m_Layer: 5
-  m_Name: (target) Hand-secondpos
+  m_Name: '[target] Hand-secondpos'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5622,7 +5658,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.6500225, y: -25.650024}
+  m_AnchoredPosition: {x: 7.6500225, y: -107}
   m_SizeDelta: {x: 132, y: 152}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &995075353
@@ -5673,7 +5709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1018845519}
   m_Layer: 5
-  m_Name: (target) Phone-secondpos
+  m_Name: '[target] Phone-secondpos'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6565,8 +6601,8 @@ GameObject:
   - component: {fileID: 1379230089}
   - component: {fileID: 1379230092}
   - component: {fileID: 1379230091}
-  - component: {fileID: 1379230093}
   - component: {fileID: 1379230094}
+  - component: {fileID: 1379230093}
   m_Layer: 5
   m_Name: '[3] Panel-Start'
   m_TagString: Untagged
@@ -6652,6 +6688,17 @@ MonoBehaviour:
   StretchOutDuration: 0.5
   canvasGroup: {fileID: 1379230094}
   popupTransform: {fileID: 0}
+  objectOne: {fileID: 995075352}
+  startPositionObjectOne: {x: 7.650023, y: -107}
+  targetPositionOne: {fileID: 675773465}
+  durationOne: 1
+  objectTwo: {fileID: 538950455}
+  durationTwo: 0.3
+  objectThree: {fileID: 1546640871}
+  durationThree: 0.3
+  targetArea: {fileID: 1483985053}
+  iconParent: {fileID: 581106646}
+  spawnCount: 5
 --- !u!225 &1379230094
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6820,6 +6867,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446221981}
   m_CullTransparentMesh: 1
+--- !u!1 &1483985052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1483985053}
+  - component: {fileID: 1483985055}
+  - component: {fileID: 1483985054}
+  m_Layer: 5
+  m_Name: '[target]Area Klick'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1483985053
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483985052}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1770071094}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 330.36, y: 717.26}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1483985054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483985052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1483985055
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483985052}
+  m_CullTransparentMesh: 1
 --- !u!1 &1546640870
 GameObject:
   m_ObjectHideFlags: 0
@@ -6847,8 +6969,8 @@ RectTransform:
   m_GameObject: {fileID: 1546640870}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 581106646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7689,6 +7811,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 484527787}
+  - {fileID: 1483985053}
   - {fileID: 581106646}
   - {fileID: 119220493}
   m_Father: {fileID: 1379230089}
@@ -7962,7 +8085,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1814932175}
   m_Layer: 5
-  m_Name: (target) Hand-secondpos
+  m_Name: '[target] Hand-secondpos'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
