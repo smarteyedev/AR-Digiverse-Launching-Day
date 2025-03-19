@@ -10,6 +10,10 @@ namespace Smarteye.AR
         [SerializeField] private GameManager gameManager;
         [SerializeField] private List<PanelItem> panels;
 
+        [Space(5f)]
+        [SerializeField] private bool isSearchingMarker;
+        [SerializeField] private TutorPanelHandler guideScanMarker;
+
         [Serializable]
         public class PanelItem
         {
@@ -68,6 +72,17 @@ namespace Smarteye.AR
                 handler.PanelVisibility(true);
                 handler.ShowResultFail(result);
             }
+        }
+
+        public void SetIsSearchingMarker(bool conn)
+        {
+            isSearchingMarker = conn;
+        }
+
+        public void ShowMarkerGuide(bool conn)
+        {
+            if (isSearchingMarker)
+                guideScanMarker.gameObject.SetActive(conn);
         }
     }
 }

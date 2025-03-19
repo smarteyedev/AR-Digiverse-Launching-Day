@@ -39,6 +39,8 @@ namespace Smarteye.AR
         [SerializeField] private GameObject timerParent;
         [SerializeField] private TextMeshProUGUI countdownText;
 
+        [Space(5f)]
+
         [Header("Unity Events")]
         [Tooltip("is called on game start")]
         public UnityEvent OnStart;
@@ -161,7 +163,7 @@ namespace Smarteye.AR
 
                 uIController.ShowResultPanel(
                     true,
-                    $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.)"
+                    $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik)"
                     // $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {totalTimePlayed} detik.)"
                     );
             }
@@ -171,7 +173,7 @@ namespace Smarteye.AR
 
                 uIController.ShowResultPanel(
                     false,
-                    $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik.)"
+                    $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {timeSpan.Seconds:D2}.{timeSpan.Milliseconds:D3} detik)"
                     // $"{playerName} <br> ({tapMechanism.TapCount} ketukan dalam {totalTimePlayed} detik.)"
                     );
             }
@@ -225,12 +227,16 @@ namespace Smarteye.AR
                 uIController.ControllerShowPanel(4);
                 tapMechanism.SetTappingUIActive(true);
             }
+
+            uIController.ShowMarkerGuide(false);
         }
 
         public void OnMarkerLost()
         {
             tapMechanism.SetTappingUIActive(false);
             tapMechanism.ResetTappingProgress();
+
+            uIController.ShowMarkerGuide(true);
 
             if (!isTimerRun)
             {

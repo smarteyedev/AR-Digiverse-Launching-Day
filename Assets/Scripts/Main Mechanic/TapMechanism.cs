@@ -290,7 +290,7 @@ namespace Smarteye.AR
             } */
 
             m_isTapping = false;
-            currentObject.UpdateCharacterAnimation(m_currentProgressValue);
+            // currentObject.UpdateCharacterAnimation(m_currentProgressValue);
             progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
         }
 

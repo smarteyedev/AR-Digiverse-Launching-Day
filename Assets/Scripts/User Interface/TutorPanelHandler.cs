@@ -19,9 +19,20 @@ namespace Smarteye.AR
         public Vector2 startPositionObjectTwo;
         public float durationTwo = 1.5f;
 
-        void Start()
+        private Sequence sequence;
+
+        void OnEnable()
         {
             PlayAnimation(true);
+        }
+
+        void OnDisable()
+        {
+            // Hentikan semua animasi pada objectOne dan objectTwo
+            if (sequence != null)
+            {
+                sequence.Kill();
+            }
         }
 
         public void PlayAnimation(bool isLoop)
@@ -29,7 +40,7 @@ namespace Smarteye.AR
             objectOne.anchoredPosition = startPositionObjectOne;
             objectOne.localScale = Vector3.one * 0.5f;
 
-            Sequence sequence = DOTween.Sequence();
+            sequence = DOTween.Sequence();
 
             sequence.Append(objectOne.DOAnchorPos(targetPositionOne.anchoredPosition, durationOne).SetEase(Ease.OutBack));
             sequence.Join(objectOne.DOScale(Vector3.one, durationOne).SetEase(Ease.OutBack));
