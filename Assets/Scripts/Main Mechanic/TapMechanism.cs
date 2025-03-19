@@ -107,7 +107,10 @@ namespace Smarteye.AR
 
         void Update()
         {
-            if (m_isCanTapping == false) return;
+            if (m_isCanTapping == false)
+            {
+                return;
+            }
 
             if (m_isTapping)
             {
@@ -136,6 +139,7 @@ namespace Smarteye.AR
                         gameManager.PauseTimer();
 
                         currentObject.ShowFinalAnimation();
+                        currentObject.isShowFinalAnimation = true;
 
                         m_isFinished = true;
                     }
