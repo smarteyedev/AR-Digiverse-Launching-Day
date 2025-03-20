@@ -10,6 +10,21 @@ namespace Smarteye.AR.WebRequest
     {
         Action onSuccessAction;
 
+        /* void Update()
+        {
+            if (Input.GetKey(KeyCode.Alpha1))
+            {
+                SendPlayerData(
+                    _playerName: "taufiq unity 1",
+                    _playerTimer: 04.1234f,
+                    _playerTapCount: 3,
+                    () =>
+                    {
+                        Debug.Log($"Has sent");
+                    });
+            }
+        } */
+
         public void SendPlayerData(Action onComplateAction)
         {
             onSuccessAction = onComplateAction;
@@ -29,14 +44,13 @@ namespace Smarteye.AR.WebRequest
 
             Dictionary<string, object> newPlayer = new Dictionary<string, object>
             {
-                {"increment", 1},
-                {"playerName", _playerName},
-                {"playerTimer", _playerTimer},
-                {"playerTapCount", _playerTapCount}
+                {"name", _playerName},
+                {"jumlah_ketukan", _playerTapCount},
+                {"waktu_penyelesaian", _playerTimer}
             };
 
             RowDataObject dataObject = new RowDataObject(newPlayer);
-            // restAPI.PostActionCustom(dataObject.baseData, OnSuccessResult, OnProtocolErr, DataProcessingErr, "postdata");
+            restAPI.PostActionCustom(dataObject.baseData, OnSuccessResult, OnProtocolErr, DataProcessingErr, "postdataplayer");
         }
 
         public override void DataProcessingErr(JObject result)

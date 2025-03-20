@@ -33,7 +33,8 @@ namespace Smarteye.AR
 
         public bool IsFinishedTap
         {
-            get { return m_currentProgressValue == m_maxProgressValue; }
+            //! get { return m_currentProgressValue == m_maxProgressValue; }
+            get { return progressSlider.value == m_maxProgressValue; }
             private set { }
         }
 
@@ -106,7 +107,10 @@ namespace Smarteye.AR
 
         void Update()
         {
-            if (m_isCanTapping == false) return;
+            if (m_isCanTapping == false)
+            {
+                return;
+            }
 
             if (m_isTapping)
             {
@@ -119,24 +123,26 @@ namespace Smarteye.AR
                     return;
                 }
 
-                m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, m_maxProgressValue, increaseSpeed * Time.deltaTime);
+                m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, m_maxProgressValue, increaseSpeed * Time.fixedDeltaTime);
 
                 CheckProgressMessages(ProgressMessage.Condition.OnIncrease);
 
-                if (progressSlider.value == m_maxProgressValue)
+                //! if (progressSlider.value == m_maxProgressValue)
+                if (IsFinishedTap)
                 {
                     if (!m_isFinished)
                     {
                         currentObject.ShowVFX();
 
                         OnTapFinish?.Invoke();
-                        Invoke(nameof(OnReachingTarget), 8f);
+                        Invoke(nameof(OnReachingTarget), 6f);
                         gameManager.PauseTimer();
+
+                        currentObject.ShowFinalAnimation();
+                        currentObject.isShowFinalAnimation = true;
 
                         m_isFinished = true;
                     }
-
-                    m_isCanTapping = false;
 
                     SetTappingUIActive(false);
 
@@ -146,27 +152,30 @@ namespace Smarteye.AR
             }
             else
             {
-                m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, 0f, decreaseSpeed * Time.deltaTime);
-
-                // Timer untuk cek waktu idle
-                m_timeSinceLastTap += Time.deltaTime;
-
-                if (m_timeSinceLastTap >= m_idleThreshold)
+                if (!IsFinishedTap)
                 {
-                    CheckProgressMessages(ProgressMessage.Condition.OnDecrease);
-                }
+                    m_currentProgressValue = Mathf.MoveTowards(m_currentProgressValue, 0f, decreaseSpeed * Time.fixedDeltaTime);
 
-                // Debug.Log(m_timeSinceLastTap);
+                    // Timer untuk cek waktu idle
+                    m_timeSinceLastTap += Time.deltaTime;
+                    if (m_timeSinceLastTap >= m_idleThreshold)
+                    {
+                        CheckProgressMessages(ProgressMessage.Condition.OnDecrease);
+                    }
+                }
             }
 
-            if (progressSlider) { progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue; }
-
-            if (currentObject)
-            { currentObject.UpdateCharacterAnimation(m_currentProgressValue); }
-
-            if (Mathf.Abs(m_currentProgressValue - progressSlider.value) > 0.01f)
+            if (!IsFinishedTap)
             {
-                progressValue?.Invoke(m_currentProgressValue);
+                if (progressSlider) { progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue; }
+
+                if (currentObject)
+                { currentObject.UpdateCharacterAnimation(m_currentProgressValue); }
+
+                if (Mathf.Abs(m_currentProgressValue - progressSlider.value) > 0.01f)
+                {
+                    progressValue?.Invoke(m_currentProgressValue);
+                }
             }
         }
 
@@ -216,6 +225,8 @@ namespace Smarteye.AR
 
             m_countdownTime = m_countdownDuration;
 
+            SetTappingUIActive(false);
+
             for (int i = (int)m_countdownTime; i > 0; i--)
             {
                 // Debug.Log($"countdown : {i}");
@@ -251,6 +262,12 @@ namespace Smarteye.AR
 
         public void SetTappingUIActive(bool isActive)
         {
+            if (IsFinishedTap)
+            {
+                currentObject.ShowFinalAnimation();
+                return;
+            }
+
             if (instructionText)
             {
                 instructionText.gameObject.SetActive(isActive);
@@ -271,9 +288,13 @@ namespace Smarteye.AR
 
         public void ResetTappingProgress()
         {
-            m_currentProgressValue = 0;
+            /* if (!IsFinishedTap && !m_isFinished)
+            {
+                m_currentProgressValue = 0;
+            } */
 
-            currentObject.UpdateCharacterAnimation(m_currentProgressValue);
+            m_isTapping = false;
+            // currentObject.UpdateCharacterAnimation(m_currentProgressValue);
             progressSlider.value = m_currentProgressValue > m_lowerSliderValue ? m_currentProgressValue : m_lowerSliderValue;
         }
 

@@ -13,6 +13,16 @@ namespace Smarteye.AR
         [SerializeField] private GameObject messageParent;
         [SerializeField] private TextMeshProUGUI messageText; //! ganti dengan textmeshpro
 
+        public bool isShowFinalAnimation;
+
+        private void OnEnable()
+        {
+            if (isShowFinalAnimation)
+            {
+                ShowFinalAnimation();
+            }
+        }
+
         public void UpdateCharacterAnimation(float _arg)
         {
             foreach (Animator item in characters)
@@ -26,18 +36,17 @@ namespace Smarteye.AR
             ResetDefault();
         }
 
-        void OnEnable()
+        public void ShowFinalAnimation()
         {
-            if (messageParent.gameObject.activeSelf)
-            {
-                ShowVFX();
-            }
+            UpdateCharacterAnimation(1f);
+            ShowVFX();
         }
 
         public void ResetDefault()
         {
             vfx.Stop();
             messageParent.gameObject.SetActive(false);
+            isShowFinalAnimation = false;
         }
 
         public void ShowVFX()

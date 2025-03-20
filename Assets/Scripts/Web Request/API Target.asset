@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf05fb1f20ebc84aa2263f1b836d6a0, type: 3}
   m_Name: API Target
   m_EditorClassIdentifier: 
-  url: https://ar.mydigilearn.id/
+  url: https://ar.mydigilearn.site/
   endpoints:
   - title: postdata
     targetEndpoint: api/counter
+  - title: postdataplayer
+    targetEndpoint: api/players
