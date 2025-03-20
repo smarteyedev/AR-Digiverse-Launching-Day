@@ -25,7 +25,6 @@ namespace Smarteye.AR
         [Space(10f)]
         [SerializeField] private RectTransform targetArea;
         [SerializeField] private RectTransform iconParent;
-        [SerializeField] private int spawnCount = 5;
 
         void OnEnable()
         {

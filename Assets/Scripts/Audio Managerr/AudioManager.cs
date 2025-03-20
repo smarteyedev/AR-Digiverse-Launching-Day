@@ -6,8 +6,8 @@ namespace Smarteye.AR
 {
     public class AudioManager : MonoBehaviour
     {
-        public Sound[] musicSounds, sfxSounds;
-        public AudioSource musicSource, sfxSource;
+        [SerializeField] private Sound[] musicSounds, sfxSounds;
+        [SerializeField] private AudioSource musicSource, sfxSource;
 
         private void Start()
         {

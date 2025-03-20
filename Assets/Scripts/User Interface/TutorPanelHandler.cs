@@ -7,17 +7,17 @@ namespace Smarteye.AR
     {
         [Header("UI Animation")]
         // Object pertama (UI)
-        public RectTransform objectOne;
-        public RectTransform targetPositionOne;
-        public Vector2 startPositionObjectOne;
-        public float durationOne = 1f;
+        [SerializeField] private RectTransform objectOne;
+        [SerializeField] private RectTransform targetPositionOne;
+        [SerializeField] private Vector2 startPositionObjectOne;
+        [SerializeField] private float durationOne = 1f;
 
         [Space(5f)]
         // Object kedua (UI)
-        public RectTransform objectTwo;
-        public RectTransform targetPositionTwo;
-        public Vector2 startPositionObjectTwo;
-        public float durationTwo = 1.5f;
+        [SerializeField] private RectTransform objectTwo;
+        [SerializeField] private RectTransform targetPositionTwo;
+        [SerializeField] private Vector2 startPositionObjectTwo;
+        [SerializeField] private float durationTwo = 1.5f;
 
         private Sequence sequence;
 
